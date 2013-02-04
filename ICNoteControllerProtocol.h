@@ -17,13 +17,19 @@
 
 
 
-
 @protocol ICNoteViewControllerDelegate <NSObject>
 @optional
 //Called on any time a state change has occured - even if a state has changed to itself - (i.e. from KLControllerCardStateDefault to KLControllerCardStateDefault)
 -(void)controllerCard:(CardView*)card didChangeToState:(int)toState fromState:(int)fromState;
 //Called when user is panning and a the card has travelled X percent of the distance to the top - Used to redraw other cards during panning fanout
 -(void)controllerCard:(CardView*)card didUpdatePanPercentage:(CGFloat) percentage;
+@end
+
+
+
+@protocol CardViewProtocol
+@property (nonatomic, strong) NSObject<ICNoteViewControllerDelegate>* delegate;
+- (void) setState:(int)state animated:(BOOL) animated;
 @end
 
 

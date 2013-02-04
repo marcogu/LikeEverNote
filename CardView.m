@@ -11,6 +11,18 @@
 
 @implementation CardView
 
+-(id)initWithControlSnapshot:(UIImage*)snapshotImg scheduler:(id<PreviewableControllerProtocol>)nvcontroller index:(NSInteger)idx
+{
+    CGRect frame = {{0,0},snapshotImg.size};
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        index = idx;
+        originY = [nvcontroller defaultVerticalOriginForIndex:index];
+    }
+    return self;
+}
+
 -(id) initWithNoteViewController: (UIViewController<PreviewableControllerProtocol>*) noteView navigationController:(UINavigationController*) navigationController index:(NSInteger) idx
 {
     index = idx;
@@ -33,6 +45,7 @@
         UILongPressGestureRecognizer* pressGesture =
             [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformLongPress:)];
         [pressGesture setMinimumPressDuration: 0.2f];
+        
         [self.navigationController.navigationBar addGestureRecognizer: panGesture];
         [self.navigationController.navigationBar addGestureRecognizer:pressGesture];
         

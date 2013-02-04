@@ -9,11 +9,18 @@
 #import "NoteCardViewController.h"
 #import "CardView.h"
 #import "NoteCardDatasource.h"
+#import "ICNoteControllerProtocol.h"
 
 @interface NoteCardViewController ()
 @end
 
 @implementation NoteCardViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
 
 - (void) viewDidLoad
 {
@@ -58,13 +65,13 @@
 {
     [super reloadInputViews];
     
-    for (CardView* cardview in self.controllerCards)
-    {
-        [cardview.navigationController willMoveToParentViewController:nil];
-        [cardview removeFromSuperview];
-    }
+//    for (CardViewProtocol* cardview in self.controllerCards)
+//    {
+//        [cardview.navigationController willMoveToParentViewController:nil];
+//        [cardview removeFromSuperview];
+//    }
     
-    for (CardView* container in self.controllerCards)
+    for (UIView* container in self.controllerCards)
         [self.view addSubview:container];
 }
 
@@ -94,25 +101,25 @@
 
 #pragma mark - Delegate implementation for KLControllerCard
 
--(void) controllerCard:(CardView*)controllerCard didChangeToDisplayState:(ICControllerCardState) toState fromDisplayState:(ICControllerCardState) fromState {
+-(void) controllerCard:(NSObject<CardViewProtocol>*)controllerCard didChangeToDisplayState:(ICControllerCardState) toState fromDisplayState:(ICControllerCardState) fromState {
     
     if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen) {
         
         //For all cards above the current card move them
-        for (CardView* currentCard  in [self controllerCardAboveCard:controllerCard]) {
+        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
             [currentCard setState:ICControllerCardStateHiddenTop animated:YES];
         }
-        for (CardView* currentCard  in [self controllerCardBelowCard:controllerCard]) {
+        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
             [currentCard setState:ICControllerCardStateHiddenBottom animated:YES];
         }
     }
     else if (fromState == ICControllerCardStateFullScreen && toState == ICControllerCardStateDefault) {
         //For all cards above the current card move them back to default state
-        for (CardView* currentCard  in [self controllerCardAboveCard:controllerCard]) {
+        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
             [currentCard setState:ICControllerCardStateDefault animated:YES];
         }
         //For all cards below the current card move them back to default state
-        for (CardView* currentCard  in [self controllerCardBelowCard:controllerCard]) {
+        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
             [currentCard setState:ICControllerCardStateHiddenBottom animated:NO];
             [currentCard setState:ICControllerCardStateDefault animated:YES];
         }
@@ -130,7 +137,8 @@
     }
 }
 
-- (NSArray*) controllerCardAboveCard:(CardView*) card {
+- (NSArray*) controllerCardAboveCard:(NSObject<CardViewProtocol>*) card
+{
     NSInteger index = [self.controllerCards indexOfObject:card];
     
     return [self.controllerCards filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CardView* controllerCard, NSDictionary *bindings) {
@@ -141,7 +149,8 @@
     }]];
 }
 
-- (NSArray*) controllerCardBelowCard:(CardView*) card {
+- (NSArray*) controllerCardBelowCard:(NSObject<CardViewProtocol>*) card
+{
     NSInteger index = [self.controllerCards indexOfObject: card];
     
     return [self.controllerCards filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CardView* controllerCard, NSDictionary *bindings) {

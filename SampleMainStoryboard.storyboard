@@ -7,8 +7,7 @@
         <!--Navigation Controller-->
         <scene sceneID="SHK-6W-zjk">
             <objects>
-                <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="XKg-Fg-Gby" sceneMemberID="viewController">
-                    <nil key="simulatedTopBarMetrics"/>
+                <navigationController definesPresentationContext="YES" id="XKg-Fg-Gby" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4te-aO-moA">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -25,7 +24,7 @@
             <objects>
                 <viewController id="H0z-cw-MHW" customClass="NoteCardViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2m6-oI-NXz">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

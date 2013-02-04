@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A9166E4216A5379E003B2061 /* NoteCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9166E4116A5379E003B2061 /* NoteCardViewController.m */; };
 		A91B151716B7A0A90030007D /* DemoVo.m in Sources */ = {isa = PBXBuildFile; fileRef = A91B151616B7A0A90030007D /* DemoVo.m */; };
+		A92F60CD16BF9FC5002B1E9A /* ICCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */; };
 		A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9472B4816BA1B6B00E9DC5C /* CustomerController.m */; };
 		A9A8CA5416A3FA8D0027364A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5316A3FA8D0027364A /* UIKit.framework */; };
 		A9A8CA5616A3FA8D0027364A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5516A3FA8D0027364A /* Foundation.framework */; };
@@ -59,6 +60,8 @@
 		A9166E4116A5379E003B2061 /* NoteCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteCardViewController.m; sourceTree = "<group>"; };
 		A91B151516B7A0A90030007D /* DemoVo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVo.h; sourceTree = "<group>"; };
 		A91B151616B7A0A90030007D /* DemoVo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVo.m; sourceTree = "<group>"; };
+		A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardItem.h; sourceTree = "<group>"; };
+		A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardItem.m; sourceTree = "<group>"; };
 		A9472B4716BA1B6B00E9DC5C /* CustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerController.h; sourceTree = "<group>"; };
 		A9472B4816BA1B6B00E9DC5C /* CustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerController.m; sourceTree = "<group>"; };
 		A9A8CA4F16A3FA8D0027364A /* superTabNavigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = superTabNavigator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,9 +145,19 @@
 			name = vo;
 			sourceTree = "<group>";
 		};
+		A92F60C916BF9FA9002B1E9A /* icversion */ = {
+			isa = PBXGroup;
+			children = (
+				A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */,
+				A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */,
+			);
+			name = icversion;
+			sourceTree = "<group>";
+		};
 		A9A8CA4416A3FA8D0027364A = {
 			isa = PBXGroup;
 			children = (
+				A92F60C916BF9FA9002B1E9A /* icversion */,
 				A9ED88D416A7B12700A517F5 /* my */,
 				A9A8CA9416A3FAA80027364A /* class */,
 				A9A8CA5916A3FA8D0027364A /* superTabNavigator */,
@@ -401,6 +414,7 @@
 				A9ED88F116A7DB9A00A517F5 /* NoteCardDatasource.m in Sources */,
 				A91B151716B7A0A90030007D /* DemoVo.m in Sources */,
 				A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */,
+				A92F60CD16BF9FC5002B1E9A /* ICCardItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
