@@ -1,0 +1,155 @@
+//
+//  NoteCardViewController.m
+//  superTabNavigator
+//
+//  Created by marco on 13-1-15.
+//  Copyright (c) 2013年 marco. All rights reserved.
+//
+
+#import "NoteCardViewController.h"
+#import "CardView.h"
+#import "NoteCardDatasource.h"
+
+@interface NoteCardViewController ()
+@end
+
+@implementation NoteCardViewController
+
+- (void) viewDidLoad
+{
+    self.dataSource = [NoteCardDatasource getSampleInstance];
+    [self reloadData];
+    [super viewDidLoad];
+    [self reloadInputViews];
+}
+
+
+#pragma mark - private method
+
+- (void) reloadData
+{
+    UIViewController<PreviewableControllerProtocol>* protocol = self;
+    totalCards = [self.dataSource numberOfControllerCardsInNoteView:protocol];
+    NSMutableArray* nvcontrollers = [NSMutableArray array];
+    
+    for (int count = 0; count < totalCards; count++)
+    {
+        UIViewController* vc = [self.dataSource noteView:self viewControllerForRowAtIndexPath:[NSIndexPath indexPathForRow:count inSection:0]];
+        UINavigationController* nvgcontroller = [[UINavigationController alloc] initWithRootViewController:vc];
+        
+        CardView* cdContainer = [[CardView alloc] initWithNoteViewController:self
+                                                                        navigationController: nvgcontroller
+                                                                                       index:count];
+        
+        cdContainer.delegate = self;
+        NSLog(@"%d", nvcontrollers.count);
+        [nvcontrollers addObject:cdContainer];
+
+        [self addChildViewController:nvgcontroller];
+        [self didMoveToParentViewController:self];
+        
+        [nvgcontroller release];
+        [cdContainer release];
+    }
+    self.controllerCards = nvcontrollers;
+}
+
+- (void) reloadInputViews
+{
+    [super reloadInputViews];
+    
+    for (CardView* cardview in self.controllerCards)
+    {
+        [cardview.navigationController willMoveToParentViewController:nil];
+        [cardview removeFromSuperview];
+    }
+    
+    for (CardView* container in self.controllerCards)
+        [self.view addSubview:container];
+}
+
+
+#pragma mark - PreviewableControllerProtocol
+
+- (CGFloat) scalingFactorForIndex: (NSInteger) index
+{
+    //Items should get progressively smaller based on their index in the navigation controller array
+    CGFloat result = powf(kDefaultMinimizedScalingFactor, (totalCards - index));
+    return result;
+}
+
+- (CGFloat) defaultVerticalOriginForIndex: (NSInteger) index
+{
+    //Sum up the shrunken size of each of the cards appearing before the current index
+    CGFloat originOffset = 0;
+    for (int i = 0; i < index; i ++)
+    {
+        CGFloat scalingFactor = [self scalingFactorForIndex: i];
+        originOffset += scalingFactor * kDefaultNavigationControllerToolbarHeight * kDefaultNavigationBarOverlap;
+    }
+    
+    //Position should start at kDefaultVerticalOrigin and move down by size of nav toolbar for each additional nav controller
+    return kDefaultVerticalOrigin + originOffset;
+}
+
+#pragma mark - Delegate implementation for KLControllerCard
+
+-(void) controllerCard:(CardView*)controllerCard didChangeToDisplayState:(ICControllerCardState) toState fromDisplayState:(ICControllerCardState) fromState {
+    
+    if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen) {
+        
+        //For all cards above the current card move them
+        for (CardView* currentCard  in [self controllerCardAboveCard:controllerCard]) {
+            [currentCard setState:ICControllerCardStateHiddenTop animated:YES];
+        }
+        for (CardView* currentCard  in [self controllerCardBelowCard:controllerCard]) {
+            [currentCard setState:ICControllerCardStateHiddenBottom animated:YES];
+        }
+    }
+    else if (fromState == ICControllerCardStateFullScreen && toState == ICControllerCardStateDefault) {
+        //For all cards above the current card move them back to default state
+        for (CardView* currentCard  in [self controllerCardAboveCard:controllerCard]) {
+            [currentCard setState:ICControllerCardStateDefault animated:YES];
+        }
+        //For all cards below the current card move them back to default state
+        for (CardView* currentCard  in [self controllerCardBelowCard:controllerCard]) {
+            [currentCard setState:ICControllerCardStateHiddenBottom animated:NO];
+            [currentCard setState:ICControllerCardStateDefault animated:YES];
+        }
+    }
+    else if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateDefault){
+        //If the current state is default and the user does not travel far enough to kick into a new state, then  return all cells back to their default state
+        for (CardView* cardBelow in [self controllerCardBelowCard: controllerCard]) {
+            [cardBelow setState:ICControllerCardStateDefault animated:YES];
+        }
+    }
+    
+    //Notify the delegate of the change
+    if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToDisplayState:fromDisplayState:)]) {
+        [self.delegate controllerCard:controllerCard didChangeToState:toState fromState:fromState];
+    }
+}
+
+- (NSArray*) controllerCardAboveCard:(CardView*) card {
+    NSInteger index = [self.controllerCards indexOfObject:card];
+    
+    return [self.controllerCards filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CardView* controllerCard, NSDictionary *bindings) {
+        NSInteger currentIndex = [self.controllerCards indexOfObject:controllerCard];
+        
+        //Only return cards with an index less than the one being compared to
+        return index > currentIndex;
+    }]];
+}
+
+- (NSArray*) controllerCardBelowCard:(CardView*) card {
+    NSInteger index = [self.controllerCards indexOfObject: card];
+    
+    return [self.controllerCards filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CardView* controllerCard, NSDictionary *bindings) {
+        NSInteger currentIndex = [self.controllerCards indexOfObject:controllerCard];
+        
+        //Only return cards with an index greater than the one being compared to
+        return index < currentIndex;
+    }]];
+}
+
+@end

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
+#import "SampleAppDelgate.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([SampleAppDelgate class]));
     }
 }
