@@ -7,7 +7,7 @@
 //
 
 #import "NoteCardViewController.h"
-#import "CardView.h"
+//#import "CardView.h"
 #import "NoteCardDatasource.h"
 #import "ICNoteControllerProtocol.h"
 
@@ -44,7 +44,7 @@
         UIViewController* vc = [self.dataSource noteView:self viewControllerForRowAtIndexPath:[NSIndexPath indexPathForRow:count inSection:0]];
         UINavigationController* nvgcontroller = [[UINavigationController alloc] initWithRootViewController:vc];
         
-        CardView* cdContainer = [[CardView alloc] initWithNoteViewController:self
+        NSObject<CardViewProtocol>* cdContainer = [[CardView alloc] initWithNoteViewController:self
                                                                         navigationController: nvgcontroller
                                                                                        index:count];
         
