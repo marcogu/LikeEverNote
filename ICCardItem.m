@@ -7,6 +7,7 @@
 //
 
 #import "ICCardItem.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ICCardItem ()
 
@@ -45,6 +46,20 @@
     return self;
 }
 
+-(void) redrawShadow
+{
+    if (kDefaultShadowEnabled)
+    {
+        UIBezierPath *path  =  [UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:kDefaultCornerRadius];
+        
+        [self.layer setShadowOpacity: kDefaultShadowOpacity];
+        [self.layer setShadowOffset: kDefaultShadowOffset];
+        [self.layer setShadowRadius: kDefaultShadowRadius];
+        [self.layer setShadowColor: [kDefaultShadowColor CGColor]];
+        [self.layer setShadowPath: [path CGPath]];
+    }
+}
+
 -(void) setState:(ICControllerCardState)state animated:(BOOL) animated
 {
     if (animated)
@@ -78,14 +93,17 @@
             break;
     }
     //start new animation.
-//    ICControllerCardState lastState = self.state;
-//    [self setState:state];
+    ICControllerCardState lastState = self.state;
+    [self setState:state];
     //Notify the delegate
-//    if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
-//    {
-//        [self.delegate controllerCard:self
-//                     didChangeToState:state fromState: lastState];
-//    }
+    if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
+        [self.delegate controllerCard:self didChangeToState:state fromState: lastState];
+}
+
+-(void) setFrame:(CGRect)frame
+{
+    [super setFrame: frame];
+    [self redrawShadow];
 }
 
 -(void)dealloc
@@ -93,6 +111,32 @@
     [_snapshotImg release];
     [_scheduleController release];
     [super dealloc];
+}
+
+-(BOOL)isNeedToInvokeDelegate:(CGFloat)translationY
+{
+    BOOL rs = translationY > 0 && ((self.state == ICControllerCardStateFullScreen && self.frame.origin.y < originY) ||
+                                   (self.state == ICControllerCardStateDefault && self.frame.origin.y > originY));
+    if (rs)
+    {
+        if ([self.delegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
+            [self.delegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
+    }
+    return rs;
+}
+
+-(BOOL) shouldReturnToState:(ICControllerCardState) state fromPoint:(CGPoint) point
+{
+    if (state == ICControllerCardStateFullScreen)
+        return ABS(point.y) < 50;//self.navigationController.navigationBar.frame.size.height
+    else if (state == ICControllerCardStateDefault)
+        return point.y > -50;//-self.navigationController.navigationBar.frame.size.height
+    return NO;
+}
+
+-(CGFloat) percentageDistanceTravelled
+{
+    return self.frame.origin.y/originY;
 }
 
 #pragma mark - layout method
@@ -120,13 +164,49 @@
 -(void) shrinkCardToScaledSize:(BOOL) animated
 {
     [self updateScalingFactor];
-    //If animated then animate the shrinking else no animation
     if (animated)
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self shrinkCardToScaledSize:NO];}];
     else
         [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
 }
 
+#pragma mark - action handler
 
+-(void) didPerformLongPress:(UILongPressGestureRecognizer*) recognizer
+{
+    if (self.state == ICControllerCardStateDefault && recognizer.state == UIGestureRecognizerStateEnded)
+        [self setState:ICControllerCardStateFullScreen animated:YES];
+}
+
+-(void) didPerformPanGesture:(UIPanGestureRecognizer*) recognizer
+{
+    CGPoint location = [recognizer locationInView: _snapshotImg];
+    CGPoint translation = [recognizer translationInView: self];
+    
+    switch (recognizer.state)
+    {
+        case UIGestureRecognizerStateBegan:
+            if (self.state == ICControllerCardStateFullScreen)
+                [self shrinkCardToScaledSize:YES];
+            self.panOriginOffset = [recognizer locationInView: self].y;
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            [self isNeedToInvokeDelegate:translation.y];
+            [self setYCoordinate: location.y - self.panOriginOffset];
+            break;
+            //Check if it should return to the origin location
+        case UIGestureRecognizerStateEnded:
+            [self shouldReturnToState: self.state fromPoint: [recognizer translationInView:self]] ?
+            [self setState: self.state animated:YES]
+            :
+            [self setState: self.state == ICControllerCardStateFullScreen? ICControllerCardStateDefault : ICControllerCardStateFullScreen
+                  animated:YES];
+            break;
+            
+        default:
+            break;
+    }
+}
 
 @end
