@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ICNoteControllerProtocol.h"
 
-
-
 @interface CardView : UIView<CardViewProtocol>
 {
 @private
@@ -25,13 +23,7 @@
 @property (nonatomic) CGFloat panOriginOffset;
 @property (nonatomic, strong) NSObject<ICNoteViewControllerDelegate>* delegate;
 
-// old version
 -(id) initWithNoteViewController: (UIViewController<PreviewableControllerProtocol>*) noteView navigationController:(UINavigationController*) navigationController index:(NSInteger) index;
-// my version
--(id)initWithControlSnapshot:(UIImage*)snapshotImg scheduler:(id<PreviewableControllerProtocol>)nvcontroller index:(NSInteger)idx;
-
 @property(nonatomic, retain) UIImage* snapshot;
-
 - (void) setState:(ICControllerCardState)state animated:(BOOL) animated;
-
 @end

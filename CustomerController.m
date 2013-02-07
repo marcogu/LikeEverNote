@@ -10,21 +10,34 @@
 #import "DemoVo.h"
 
 @interface CustomerController ()
-
 @end
 
 @implementation CustomerController
 
-- (void)viewDidLoad
+-(void)loadView
 {
-    [super viewDidLoad];
-    if (_info)
-    {
-        UIImage* backgroundImg = [UIImage imageNamed:self.info.img];
-        [self.navigationController.navigationBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
-        [self.navigationController setTitle:_info.title];
-    }
+    [super loadView];
+    UINavigationBar* myBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    [self.view addSubview:myBar];
+    UIImage* backgroundImg = [UIImage imageNamed:self.info.img];
+    [myBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
+    self.view.backgroundColor = [UIColor redColor];
+}
 
+//- (void)viewDidLoad
+//{
+//    [super viewDidLoad];
+//    if (_info)
+//    {
+//        UIImage* backgroundImg = [UIImage imageNamed:self.info.img];
+//        [self.navigationController.navigationBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
+//        [self.navigationController setTitle:_info.title];
+//    }
+//}
+
++(UIImage*)getSnapshotImg
+{
+    return nil;
 }
 
 

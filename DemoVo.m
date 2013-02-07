@@ -16,7 +16,7 @@
     demos[0] = [[[DemoVo alloc] init] autorelease];
     demos[0].img  = @"premium-header-mid-skinny.png";
     demos[0].title = @"Go Premium";
-    
+
     demos[1] = [[[DemoVo alloc] init] autorelease];
     demos[1].img  = @"bar-mid.png";
     demos[1].title = @"Places";
@@ -38,7 +38,7 @@
     demos[5].title = @"temp";
     
     
-    NSArray* ary = [NSArray arrayWithObjects:demos count:5];
+    NSArray* ary = [NSArray arrayWithObjects:demos count:1];
     return ary;
 }
 

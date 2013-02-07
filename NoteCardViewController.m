@@ -5,9 +5,10 @@
 //  Created by marco on 13-1-15.
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
-
+#import <QuartzCore/QuartzCore.h>
 #import "NoteCardViewController.h"
-//#import "CardView.h"
+#import "CardView.h"
+#import "ICCardItem.h"
 #import "NoteCardDatasource.h"
 #import "ICNoteControllerProtocol.h"
 
@@ -30,33 +31,46 @@
     [self reloadInputViews];
 }
 
-
 #pragma mark - private method
+
+-(UIImage*)drawUIView:(UIView*)target
+{
+    UIGraphicsBeginImageContextWithOptions(target.bounds.size, target.opaque, 0.0);
+    [target.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
+-(NSObject<CardViewProtocol>*)createNVCByDataIdx:(int)dataIndex
+{
+    UIViewController* vc = [self.dataSource noteView:self viewControllerForRowAtIndexPath:[NSIndexPath indexPathForRow:dataIndex inSection:0]];
+    UINavigationController* nvgcontroller = [[UINavigationController alloc] initWithRootViewController:vc];
+    // creat card
+//    NSObject<CardViewProtocol>* cdContainer = [[CardView alloc] initWithNoteViewController:self
+//                                                                      navigationController: nvgcontroller
+//                                                                                     index:dataIndex];
+    UIImage* snapshot = [self drawUIView:vc.view];
+    NSObject<CardViewProtocol>* cdContainer = [[ICCardItem alloc] initWithSnapshot:snapshot scheduler:self index:dataIndex];
+    
+    cdContainer.delegate = self;
+    [self addChildViewController:nvgcontroller];
+    [nvgcontroller release];
+    return cdContainer;
+}
 
 - (void) reloadData
 {
-    UIViewController<PreviewableControllerProtocol>* protocol = self;
-    totalCards = [self.dataSource numberOfControllerCardsInNoteView:protocol];
+    totalCards = [self.dataSource numberOfControllerCardsInNoteView:self];
     NSMutableArray* nvcontrollers = [NSMutableArray array];
     
     for (int count = 0; count < totalCards; count++)
     {
-        UIViewController* vc = [self.dataSource noteView:self viewControllerForRowAtIndexPath:[NSIndexPath indexPathForRow:count inSection:0]];
-        UINavigationController* nvgcontroller = [[UINavigationController alloc] initWithRootViewController:vc];
-        
-        NSObject<CardViewProtocol>* cdContainer = [[CardView alloc] initWithNoteViewController:self
-                                                                        navigationController: nvgcontroller
-                                                                                       index:count];
-        
-        cdContainer.delegate = self;
-        NSLog(@"%d", nvcontrollers.count);
+        NSObject<CardViewProtocol>* cdContainer = [self createNVCByDataIdx:count];
         [nvcontrollers addObject:cdContainer];
-
-        [self addChildViewController:nvgcontroller];
-        [self didMoveToParentViewController:self];
-        
-        [nvgcontroller release];
         [cdContainer release];
+
+        [self didMoveToParentViewController:self];
     }
     self.controllerCards = nvcontrollers;
 }
@@ -65,11 +79,11 @@
 {
     [super reloadInputViews];
     
-//    for (CardViewProtocol* cardview in self.controllerCards)
-//    {
-//        [cardview.navigationController willMoveToParentViewController:nil];
-//        [cardview removeFromSuperview];
-//    }
+    //    for (CardViewProtocol* cardview in self.controllerCards)
+    //    {
+    //        [cardview.navigationController willMoveToParentViewController:nil];
+    //        [cardview removeFromSuperview];
+    //    }
     
     for (UIView* container in self.controllerCards)
         [self.view addSubview:container];
@@ -102,7 +116,7 @@
 #pragma mark - Delegate implementation for KLControllerCard
 
 -(void) controllerCard:(NSObject<CardViewProtocol>*)controllerCard didChangeToDisplayState:(ICControllerCardState) toState fromDisplayState:(ICControllerCardState) fromState {
-    
+
     if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen) {
         
         //For all cards above the current card move them

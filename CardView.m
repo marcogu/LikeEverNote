@@ -11,18 +11,6 @@
 
 @implementation CardView
 
--(id)initWithControlSnapshot:(UIImage*)snapshotImg scheduler:(id<PreviewableControllerProtocol>)nvcontroller index:(NSInteger)idx
-{
-    CGRect frame = {{0,0},snapshotImg.size};
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-        index = idx;
-        originY = [nvcontroller defaultVerticalOriginForIndex:index];
-    }
-    return self;
-}
-
 -(id) initWithNoteViewController: (UIViewController<PreviewableControllerProtocol>*) noteView navigationController:(UINavigationController*) navigationController index:(NSInteger) idx
 {
     index = idx;
@@ -120,7 +108,9 @@
 
 -(void) setYCoordinate:(CGFloat)yValue
 {
-    [self setFrame:CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height)];
+    CGRect rect = CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height);
+    [self setFrame:rect];
+    NSLog(@"setYCoordinate:%@", NSStringFromCGRect(rect));
 }
 
 -(void) expandCardToFullSize:(BOOL) animated
@@ -156,6 +146,8 @@
     CGPoint location = [recognizer locationInView: self.noteViewController.view];
     CGPoint translation = [recognizer translationInView: self];
     
+    NSLog(@"location=%@,translation=%@", NSStringFromCGPoint(location), NSStringFromCGPoint(translation));
+    
     switch (recognizer.state)
     {
         case UIGestureRecognizerStateBegan:
@@ -175,6 +167,7 @@
             :
                 [self setState: self.state == ICControllerCardStateFullScreen? ICControllerCardStateDefault : ICControllerCardStateFullScreen
                       animated:YES];
+            NSLog(@"---------------drag end---------------");
             break;
             
         default:

@@ -35,7 +35,6 @@
 		A9A8CAE816A402C50027364A /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A8CAE716A402C50027364A /* CardView.m */; };
 		A9A8CAEB16A40EE00027364A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CAEA16A40EE00027364A /* QuartzCore.framework */; };
 		A9EA851F16A6B9A3003BCC4E /* imgscrrentshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EA851E16A6B9A3003BCC4E /* imgscrrentshot1.png */; };
-		A9ED88D816A7B62F00A517F5 /* MemberTestControler.m in Sources */ = {isa = PBXBuildFile; fileRef = A9ED88D716A7B62F00A517F5 /* MemberTestControler.m */; };
 		A9ED88E916A7B98600A517F5 /* background-dark-gray-tex.png in Resources */ = {isa = PBXBuildFile; fileRef = A9ED88E316A7B98600A517F5 /* background-dark-gray-tex.png */; };
 		A9ED88EA16A7B98600A517F5 /* background-dark-gray-tex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9ED88E416A7B98600A517F5 /* background-dark-gray-tex@2x.png */; };
 		A9ED88EB16A7B98600A517F5 /* bar-mid.png in Resources */ = {isa = PBXBuildFile; fileRef = A9ED88E516A7B98600A517F5 /* bar-mid.png */; };
@@ -99,8 +98,6 @@
 		A9A8CAE916A407CF0027364A /* ICNoteControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICNoteControllerProtocol.h; sourceTree = "<group>"; };
 		A9A8CAEA16A40EE00027364A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A9EA851E16A6B9A3003BCC4E /* imgscrrentshot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgscrrentshot1.png; sourceTree = "<group>"; };
-		A9ED88D616A7B62F00A517F5 /* MemberTestControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberTestControler.h; sourceTree = "<group>"; };
-		A9ED88D716A7B62F00A517F5 /* MemberTestControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberTestControler.m; sourceTree = "<group>"; };
 		A9ED88E316A7B98600A517F5 /* background-dark-gray-tex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-dark-gray-tex.png"; sourceTree = "<group>"; };
 		A9ED88E416A7B98600A517F5 /* background-dark-gray-tex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-dark-gray-tex@2x.png"; sourceTree = "<group>"; };
 		A9ED88E516A7B98600A517F5 /* bar-mid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-mid.png"; sourceTree = "<group>"; };
@@ -158,7 +155,6 @@
 			isa = PBXGroup;
 			children = (
 				A92F60C916BF9FA9002B1E9A /* icversion */,
-				A9ED88D416A7B12700A517F5 /* my */,
 				A9A8CA9416A3FAA80027364A /* class */,
 				A9A8CA5916A3FA8D0027364A /* superTabNavigator */,
 				A9A8CA8316A3FA8E0027364A /* superTabNavigatorTests */,
@@ -259,15 +255,6 @@
 				A9472B4816BA1B6B00E9DC5C /* CustomerController.m */,
 			);
 			name = class;
-			sourceTree = "<group>";
-		};
-		A9ED88D416A7B12700A517F5 /* my */ = {
-			isa = PBXGroup;
-			children = (
-				A9ED88D616A7B62F00A517F5 /* MemberTestControler.h */,
-				A9ED88D716A7B62F00A517F5 /* MemberTestControler.m */,
-			);
-			name = my;
 			sourceTree = "<group>";
 		};
 		A9ED88E216A7B90800A517F5 /* img */ = {
@@ -410,7 +397,6 @@
 				A9A8CA9E16A3FCF60027364A /* MainController.m in Sources */,
 				A9A8CAE816A402C50027364A /* CardView.m in Sources */,
 				A9166E4216A5379E003B2061 /* NoteCardViewController.m in Sources */,
-				A9ED88D816A7B62F00A517F5 /* MemberTestControler.m in Sources */,
 				A9ED88F116A7DB9A00A517F5 /* NoteCardDatasource.m in Sources */,
 				A91B151716B7A0A90030007D /* DemoVo.m in Sources */,
 				A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */,
