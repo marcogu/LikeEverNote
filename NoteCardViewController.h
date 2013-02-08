@@ -8,10 +8,7 @@
 
 #import "ICNoteControllerProtocol.h"
 
-#define kDefaultNavigationBarOverlap 0.90
-#define kDefaultMinimizedScalingFactor 0.98
-#define kDefaultVerticalOrigin 100
-#define kDefaultNavigationControllerToolbarHeight 44
+
 
 @interface NoteCardViewController : UIViewController<PreviewableControllerProtocol, ICNoteViewControllerDelegate>
 {

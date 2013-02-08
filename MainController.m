@@ -36,13 +36,13 @@
 
 -(void)nearlessScreenShot
 {
-    NSLog(@"start");
+//    NSLog(@"start");
     UIWindow* currentScrren = [[UIApplication sharedApplication].delegate window];
     UIImage* img = [self imageWithView:self.navigationController.view inScope:currentScrren.bounds];
     UIImageView* image = [[UIImageView alloc] initWithImage:img];
     image.frame = CGRectMake(0, 70, img.size.width, img.size.height);
     [self.view addSubview:image];
-    NSLog(@"stop");
+//    NSLog(@"stop");
 }
 
 - (UIImage *)imageWithView:(UIView *)view inScope:(CGRect)scope

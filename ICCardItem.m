@@ -145,7 +145,7 @@
 {
     CGRect rect = CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height);
     [self setFrame:rect];
-    NSLog(@"setYCoordinate:%@", NSStringFromCGRect(rect));
+//    NSLog(@"setYCoordinate:%@", NSStringFromCGRect(rect));
 }
 
 -(void) updateScalingFactor
@@ -185,7 +185,7 @@
     CGPoint location = [recognizer locationInView: _scheduleController.view];
     CGPoint translation = [recognizer translationInView: self];
     
-    NSLog(@"location=%@,translation=%@", NSStringFromCGPoint(location), NSStringFromCGPoint(translation));
+//    NSLog(@"location=%@,translation=%@", NSStringFromCGPoint(location), NSStringFromCGPoint(translation));
     
     switch (recognizer.state)
     {

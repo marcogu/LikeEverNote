@@ -110,7 +110,7 @@
 {
     CGRect rect = CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height);
     [self setFrame:rect];
-    NSLog(@"setYCoordinate:%@", NSStringFromCGRect(rect));
+//    NSLog(@"setYCoordinate:%@", NSStringFromCGRect(rect));
 }
 
 -(void) expandCardToFullSize:(BOOL) animated
@@ -146,7 +146,7 @@
     CGPoint location = [recognizer locationInView: self.noteViewController.view];
     CGPoint translation = [recognizer translationInView: self];
     
-    NSLog(@"location=%@,translation=%@", NSStringFromCGPoint(location), NSStringFromCGPoint(translation));
+//    NSLog(@"location=%@,translation=%@", NSStringFromCGPoint(location), NSStringFromCGPoint(translation));
     
     switch (recognizer.state)
     {
@@ -167,7 +167,7 @@
             :
                 [self setState: self.state == ICControllerCardStateFullScreen? ICControllerCardStateDefault : ICControllerCardStateFullScreen
                       animated:YES];
-            NSLog(@"---------------drag end---------------");
+//            NSLog(@"---------------drag end---------------");
             break;
             
         default:

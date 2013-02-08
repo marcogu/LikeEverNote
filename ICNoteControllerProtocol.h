@@ -22,7 +22,10 @@
 #define kDefaultShadowColor [UIColor blackColor]
 #define kDefaultShadowEnabled YES
 
-
+#define kDefaultNavigationBarOverlap 0.90
+#define kDefaultMinimizedScalingFactor 0.98
+#define kDefaultVerticalOrigin 100
+#define kDefaultNavigationControllerToolbarHeight 44
 
 
 enum {
