@@ -10,7 +10,7 @@
 
 @interface NoteCardDatasource : NSObject<NoteViewControllerDataSource>
 @property(nonatomic, retain) NSArray* dataSource;
-- (NSInteger)numberOfControllerCardsInNoteView:(UIViewController<PreviewableControllerProtocol>*) noteView;
+- (NSInteger)numberOfControllerCardsInNoteView;
 - (UIViewController *)noteView:(UIViewController<PreviewableControllerProtocol>*)noteView viewControllerForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 +(NoteCardDatasource*)getSampleInstance;

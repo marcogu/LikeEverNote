@@ -61,7 +61,7 @@
 
 - (void) reloadData
 {
-    totalCards = [self.dataSource numberOfControllerCardsInNoteView:self];
+    totalCards = [self.dataSource numberOfControllerCardsInNoteView];
     NSMutableArray* nvcontrollers = [NSMutableArray array];
     
     for (int count = 0; count < totalCards; count++)

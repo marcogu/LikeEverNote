@@ -6,8 +6,10 @@
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ICNoteControllerProtocol.h"
 
 @interface ICSuperTabController : UIViewController
 
+@property (nonatomic, assign) id<NoteViewControllerDataSource> dataSource;
+@property (nonatomic, assign) Class cardViewClz;
 @end

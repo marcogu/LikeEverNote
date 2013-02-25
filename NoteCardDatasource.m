@@ -37,7 +37,7 @@
     return itemController;
 }
 
-- (NSInteger)numberOfControllerCardsInNoteView:(UIViewController<PreviewableControllerProtocol>*) noteView
+- (NSInteger)numberOfControllerCardsInNoteView
 {
     return self.dataSource.count;
 }
@@ -47,6 +47,9 @@
     return [[[NoteCardDatasource alloc] init] autorelease];
 }
 
-
+- (UIViewController*)topViewController
+{
+    return nil;
+}
 
 @end

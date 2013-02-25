@@ -50,6 +50,7 @@ typedef UInt32 ICControllerCardState;
 
 @protocol CardViewProtocol
 @property(nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* delegate;
+-(id)initWithSnapshot:(UIImage *)snapshotImg scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx;
 - (void) setState:(int)state animated:(BOOL) animated;
 @end
 
@@ -66,6 +67,7 @@ typedef UInt32 ICControllerCardState;
 
 
 @protocol NoteViewControllerDataSource
-- (NSInteger)numberOfControllerCardsInNoteView:(UIViewController<PreviewableControllerProtocol>*) noteView;
+- (NSInteger)numberOfControllerCardsInNoteView;
 - (UIViewController *)noteView:(UIViewController<PreviewableControllerProtocol>*)noteView viewControllerForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (UIViewController*)topViewController;
 @end
