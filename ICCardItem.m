@@ -66,6 +66,9 @@
     {
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{
             [self setState:state animated:NO];
+        } completion:^(BOOL finished) {
+            [self statePrint];
+            [self proxyTransitionSubViewController];
         }];
         return;
     }
@@ -158,7 +161,9 @@
 {
     [self updateScalingFactor];
     if (animated)
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self expandCardToFullSize:NO];}];
+        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self expandCardToFullSize:NO];} completion:^(BOOL finished) {
+            NSLog(@"full screen complete");
+        }];
     else
         [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
 }
@@ -167,7 +172,9 @@
 {
     [self updateScalingFactor];
     if (animated)
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self shrinkCardToScaledSize:NO];}];
+        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self shrinkCardToScaledSize:NO];} completion:^(BOOL finished) {
+            NSLog(@"scale size complete");
+        }];
     else
         [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
 }
@@ -184,8 +191,6 @@
 {
     CGPoint location = [recognizer locationInView: _scheduleController.view];
     CGPoint translation = [recognizer translationInView: self];
-    
-//    NSLog(@"location=%@,translation=%@", NSStringFromCGPoint(location), NSStringFromCGPoint(translation));
     
     switch (recognizer.state)
     {
@@ -213,4 +218,32 @@
     }
 }
 
+-(void)proxyTransitionSubViewController{
+    if (self.state == ICControllerCardStateFullScreen) {
+        //        [self.scheduleController transitionFromViewController:<#(UIViewController *)#> toViewController:<#(UIViewController *)#> duration:<#(NSTimeInterval)#> options:<#(UIViewAnimationOptions)#> animations:<#^(void)animations#> completion:<#^(BOOL finished)completion#>]
+        
+        //        NSLog(@"is nil? %d, %@",self.scheduleController==nil, self.scheduleController);//test ok, is not nil
+        [self.scheduleController.navigationController pushViewController:self.memberController animated:NO];
+    }
+}
+
+// test method.
+-(void)statePrint{
+    switch (self.state) {
+        case ICControllerCardStateFullScreen:
+            NSLog(@"state is full screen");
+            break;
+        case ICControllerCardStateDefault:
+            NSLog(@"state is default");
+            break;
+        case ICControllerCardStateHiddenTop:
+            NSLog(@"state is hidden top");
+            break;
+        case ICControllerCardStateHiddenBottom:
+            NSLog(@"state is hidden bottom");
+            break;
+        default:
+            break;
+    }
+}
 @end

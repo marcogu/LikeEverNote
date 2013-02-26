@@ -21,19 +21,25 @@
     [self.view addSubview:myBar];
     UIImage* backgroundImg = [UIImage imageNamed:self.info.img];
     [myBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor yellowColor];
 }
 
-//- (void)viewDidLoad
-//{
-//    [super viewDidLoad];
-//    if (_info)
-//    {
-//        UIImage* backgroundImg = [UIImage imageNamed:self.info.img];
-//        [self.navigationController.navigationBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
-//        [self.navigationController setTitle:_info.title];
-//    }
-//}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSLog(@"member controller will appear");
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSLog(@"member controller did appear");
+    
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    NSLog(@"member controller view did load");
+}
 
 +(UIImage*)getSnapshotImg
 {

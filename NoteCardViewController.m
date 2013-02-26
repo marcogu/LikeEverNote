@@ -7,12 +7,14 @@
 //
 #import <QuartzCore/QuartzCore.h>
 #import "NoteCardViewController.h"
-#import "CardView.h"
 #import "ICCardItem.h"
 #import "NoteCardDatasource.h"
 #import "ICNoteControllerProtocol.h"
 
 @interface NoteCardViewController ()
+//temp develop
+//@property(nonatomic, retain)UIViewController* currentController;
+//@property(nonatomic, retain)NSObject<CardViewProtocol>* currentCard;
 @end
 
 @implementation NoteCardViewController
@@ -45,17 +47,10 @@
 -(NSObject<CardViewProtocol>*)createNVCByDataIdx:(int)dataIndex
 {
     UIViewController* vc = [self.dataSource noteView:self viewControllerForRowAtIndexPath:[NSIndexPath indexPathForRow:dataIndex inSection:0]];
-    UINavigationController* nvgcontroller = [[UINavigationController alloc] initWithRootViewController:vc];
-    // creat card
-//    NSObject<CardViewProtocol>* cdContainer = [[CardView alloc] initWithNoteViewController:self
-//                                                                      navigationController: nvgcontroller
-//                                                                                     index:dataIndex];
     UIImage* snapshot = [self drawUIView:vc.view];
     NSObject<CardViewProtocol>* cdContainer = [[ICCardItem alloc] initWithSnapshot:snapshot scheduler:self index:dataIndex];
-    
     cdContainer.delegate = self;
-    [self addChildViewController:nvgcontroller];
-    [nvgcontroller release];
+    cdContainer.memberController = vc;
     return cdContainer;
 }
 
@@ -78,13 +73,7 @@
 - (void) reloadInputViews
 {
     [super reloadInputViews];
-    
-    //    for (CardViewProtocol* cardview in self.controllerCards)
-    //    {
-    //        [cardview.navigationController willMoveToParentViewController:nil];
-    //        [cardview removeFromSuperview];
-    //    }
-    
+    //TODO: do clear logic
     for (UIView* container in self.controllerCards)
         [self.view addSubview:container];
 }
@@ -115,42 +104,46 @@
 
 #pragma mark - Delegate implementation for KLControllerCard
 
+//这个方法提供其他非当前card动画。暂时忽略
 -(void) controllerCard:(NSObject<CardViewProtocol>*)controllerCard didChangeToDisplayState:(ICControllerCardState) toState fromDisplayState:(ICControllerCardState) fromState {
-
-    if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen) {
-        
-        //For all cards above the current card move them
-        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
-            [currentCard setState:ICControllerCardStateHiddenTop animated:YES];
-        }
-        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
-            [currentCard setState:ICControllerCardStateHiddenBottom animated:YES];
-        }
-    }
-    else if (fromState == ICControllerCardStateFullScreen && toState == ICControllerCardStateDefault) {
-        //For all cards above the current card move them back to default state
-        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
-            [currentCard setState:ICControllerCardStateDefault animated:YES];
-        }
-        //For all cards below the current card move them back to default state
-        for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
-            [currentCard setState:ICControllerCardStateHiddenBottom animated:NO];
-            [currentCard setState:ICControllerCardStateDefault animated:YES];
-        }
-    }
-    else if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateDefault){
-        //If the current state is default and the user does not travel far enough to kick into a new state, then  return all cells back to their default state
-        for (CardView* cardBelow in [self controllerCardBelowCard: controllerCard]) {
-            [cardBelow setState:ICControllerCardStateDefault animated:YES];
-        }
-    }
-    
-    //Notify the delegate of the change
-    if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToDisplayState:fromDisplayState:)]) {
-        [self.delegate controllerCard:controllerCard didChangeToState:toState fromState:fromState];
-    }
+    return;
+    /**
+     if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen) {
+     
+     //For all cards above the current card move them
+     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
+     [currentCard setState:ICControllerCardStateHiddenTop animated:YES];
+     }
+     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
+     [currentCard setState:ICControllerCardStateHiddenBottom animated:YES];
+     }
+     }
+     else if (fromState == ICControllerCardStateFullScreen && toState == ICControllerCardStateDefault) {
+     //For all cards above the current card move them back to default state
+     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
+     [currentCard setState:ICControllerCardStateDefault animated:YES];
+     }
+     //For all cards below the current card move them back to default state
+     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
+     [currentCard setState:ICControllerCardStateHiddenBottom animated:NO];
+     [currentCard setState:ICControllerCardStateDefault animated:YES];
+     }
+     }
+     else if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateDefault){
+     //If the current state is default and the user does not travel far enough to kick into a new state, then  return all cells back to their default state
+     for (NSObject<CardViewProtocol>* cardBelow in [self controllerCardBelowCard: controllerCard]) {
+     [cardBelow setState:ICControllerCardStateDefault animated:YES];
+     }
+     }
+     
+     //Notify the delegate of the change
+     if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToDisplayState:fromDisplayState:)]) {
+     [self.delegate controllerCard:controllerCard didChangeToState:toState fromState:fromState];
+     }
+     */
 }
 
+/*
 - (NSArray*) controllerCardAboveCard:(NSObject<CardViewProtocol>*) card
 {
     NSInteger index = [self.controllerCards indexOfObject:card];
@@ -162,6 +155,8 @@
         return index > currentIndex;
     }]];
 }
+ 
+
 
 - (NSArray*) controllerCardBelowCard:(NSObject<CardViewProtocol>*) card
 {
@@ -174,5 +169,7 @@
         return index < currentIndex;
     }]];
 }
+ 
+ */
 
 @end

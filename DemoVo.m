@@ -38,7 +38,7 @@
     demos[5].title = @"temp";
     
     
-    NSArray* ary = [NSArray arrayWithObjects:demos count:1];
+    NSArray* ary = [NSArray arrayWithObjects:demos count:6];
     return ary;
 }
 
