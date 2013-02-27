@@ -32,7 +32,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     NSLog(@"member controller did appear");
-    [self btnTestPop];
+//    [self btnTestPop];
 }
 
 - (void)viewDidLoad
