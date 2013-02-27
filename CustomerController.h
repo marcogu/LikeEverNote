@@ -10,5 +10,6 @@
 @class DemoVo;
 @interface CustomerController : UIViewController
 @property (nonatomic, strong) DemoVo* info;
+@property(nonatomic, retain) UINavigationBar* navigateBar;
 +(UIImage*)getSnapshotImg;
 @end

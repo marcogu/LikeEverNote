@@ -6,11 +6,15 @@
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
 
-#import "ICCardItem.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ICCardItem.h"
+#import "CustomerController.h"
 
 @interface ICCardItem ()
-
+{
+    UIPanGestureRecognizer* panGesture;
+    UILongPressGestureRecognizer* pressGesture;
+}
 @end
 
 @implementation ICCardItem
@@ -32,10 +36,8 @@
         self.snapshotImg = [[UIImageView alloc] initWithImage:snapshotImg];
         [self addSubview: _snapshotImg];
         // add gensture for content view.
-        UIPanGestureRecognizer* panGesture =
-        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformPanGesture:)];
-        UILongPressGestureRecognizer* pressGesture =
-        [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformLongPress:)];
+        panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformPanGesture:)];
+        pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformLongPress:)];
         _snapshotImg.userInteractionEnabled = YES;
         [_snapshotImg addGestureRecognizer:panGesture];
         [_snapshotImg addGestureRecognizer:pressGesture];
@@ -51,6 +53,8 @@
     [_scheduleController release];
     [_delegate release];
     [_memberController release];
+    [pressGesture release];
+    [panGesture release];
     [super dealloc];
 }
 
@@ -76,7 +80,7 @@
             [self setState:state animated:NO];
         } completion:^(BOOL finished) {
             [self statePrint];
-            [self proxyTransitionSubViewController];
+            [self pushToMemberControllerIfSelfIsCurrent];
         }];
         return;
     }
@@ -197,8 +201,11 @@
     switch (recognizer.state)
     {
         case UIGestureRecognizerStateBegan:
-            if (self.state == ICControllerCardStateFullScreen)
+            if (self.state == ICControllerCardStateFullScreen){
+                [self.scheduleController.navigationController popViewControllerAnimated:NO];
                 [self shrinkCardToScaledSize:YES];
+                [_snapshotImg addGestureRecognizer:panGesture];
+            }
             self.panOriginOffset = [recognizer locationInView: self].y;
             break;
             
@@ -220,11 +227,11 @@
     }
 }
 
--(void)proxyTransitionSubViewController{
-    if (self.state == ICControllerCardStateFullScreen) {
-        //        [self.scheduleController transitionFromViewController:<#(UIViewController *)#> toViewController:<#(UIViewController *)#> duration:<#(NSTimeInterval)#> options:<#(UIViewAnimationOptions)#> animations:<#^(void)animations#> completion:<#^(BOOL finished)completion#>]
-        
-        //        NSLog(@"is nil? %d, %@",self.scheduleController==nil, self.scheduleController);//test ok, is not nil
+-(void)pushToMemberControllerIfSelfIsCurrent{
+    if (self.state == ICControllerCardStateFullScreen)
+    {
+        CustomerController* mc = (CustomerController*)self.memberController;
+        [mc.navigateBar addGestureRecognizer:panGesture];
         [self.scheduleController.navigationController pushViewController:self.memberController animated:NO];
     }
 }

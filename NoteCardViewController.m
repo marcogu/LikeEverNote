@@ -12,9 +12,6 @@
 #import "ICNoteControllerProtocol.h"
 
 @interface NoteCardViewController ()
-//temp develop
-//@property(nonatomic, retain)UIViewController* currentController;
-//@property(nonatomic, retain)NSObject<CardViewProtocol>* currentCard;
 @end
 
 @implementation NoteCardViewController

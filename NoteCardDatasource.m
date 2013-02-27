@@ -29,11 +29,12 @@
 {
     NSString* mainStoryBoardFileName = @"SampleMainStoryboard";
     NSString* viewInStoryboardId = @"TheSameAsSample";
-    
+    // create member view controller from storyboard
     DemoVo* vo = [_dataSource objectAtIndex:indexPath.row];
     UIStoryboard * st = [UIStoryboard storyboardWithName:mainStoryBoardFileName bundle:nil];
     CustomerController* itemController = [st instantiateViewControllerWithIdentifier:viewInStoryboardId];
     itemController.info = vo;
+    
     return itemController;
 }
 
