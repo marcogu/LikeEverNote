@@ -10,7 +10,6 @@
 		A9166E4216A5379E003B2061 /* NoteCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9166E4116A5379E003B2061 /* NoteCardViewController.m */; };
 		A91B151716B7A0A90030007D /* DemoVo.m in Sources */ = {isa = PBXBuildFile; fileRef = A91B151616B7A0A90030007D /* DemoVo.m */; };
 		A92F60CD16BF9FC5002B1E9A /* ICCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */; };
-		A946A33A16C4EA4B00F7C885 /* ICSuperTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = A946A33916C4EA4B00F7C885 /* ICSuperTabController.m */; };
 		A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9472B4816BA1B6B00E9DC5C /* CustomerController.m */; };
 		A9A8CA5416A3FA8D0027364A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5316A3FA8D0027364A /* UIKit.framework */; };
 		A9A8CA5616A3FA8D0027364A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5516A3FA8D0027364A /* Foundation.framework */; };
@@ -33,7 +32,6 @@
 		A9A8CA9716A3FC7B0027364A /* SampleAppDelgate.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */; };
 		A9A8CA9E16A3FCF60027364A /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A8CA9D16A3FCF60027364A /* MainController.m */; };
 		A9A8CAA016A3FD2B0027364A /* SampleMainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */; };
-		A9A8CAE816A402C50027364A /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A8CAE716A402C50027364A /* CardView.m */; };
 		A9A8CAEB16A40EE00027364A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CAEA16A40EE00027364A /* QuartzCore.framework */; };
 		A9EA851F16A6B9A3003BCC4E /* imgscrrentshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EA851E16A6B9A3003BCC4E /* imgscrrentshot1.png */; };
 		A9ED88E916A7B98600A517F5 /* background-dark-gray-tex.png in Resources */ = {isa = PBXBuildFile; fileRef = A9ED88E316A7B98600A517F5 /* background-dark-gray-tex.png */; };
@@ -62,8 +60,6 @@
 		A91B151616B7A0A90030007D /* DemoVo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVo.m; sourceTree = "<group>"; };
 		A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardItem.h; sourceTree = "<group>"; };
 		A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardItem.m; sourceTree = "<group>"; };
-		A946A33816C4EA4B00F7C885 /* ICSuperTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSuperTabController.h; sourceTree = "<group>"; };
-		A946A33916C4EA4B00F7C885 /* ICSuperTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSuperTabController.m; sourceTree = "<group>"; };
 		A9472B4716BA1B6B00E9DC5C /* CustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerController.h; sourceTree = "<group>"; };
 		A9472B4816BA1B6B00E9DC5C /* CustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerController.m; sourceTree = "<group>"; };
 		A9A8CA4F16A3FA8D0027364A /* superTabNavigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = superTabNavigator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,8 +92,6 @@
 		A9A8CA9C16A3FCF60027364A /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		A9A8CA9D16A3FCF60027364A /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMainStoryboard.storyboard; sourceTree = "<group>"; };
-		A9A8CAE616A402C50027364A /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
-		A9A8CAE716A402C50027364A /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
 		A9A8CAE916A407CF0027364A /* ICNoteControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICNoteControllerProtocol.h; sourceTree = "<group>"; };
 		A9A8CAEA16A40EE00027364A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A9EA851E16A6B9A3003BCC4E /* imgscrrentshot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgscrrentshot1.png; sourceTree = "<group>"; };
@@ -148,10 +142,6 @@
 		A92F60C916BF9FA9002B1E9A /* icversion */ = {
 			isa = PBXGroup;
 			children = (
-				A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */,
-				A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */,
-				A946A33816C4EA4B00F7C885 /* ICSuperTabController.h */,
-				A946A33916C4EA4B00F7C885 /* ICSuperTabController.m */,
 			);
 			name = icversion;
 			sourceTree = "<group>";
@@ -249,9 +239,9 @@
 				A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */,
 				A9A8CA9C16A3FCF60027364A /* MainController.h */,
 				A9A8CA9D16A3FCF60027364A /* MainController.m */,
+				A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */,
+				A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */,
 				A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */,
-				A9A8CAE616A402C50027364A /* CardView.h */,
-				A9A8CAE716A402C50027364A /* CardView.m */,
 				A9166E4016A5379E003B2061 /* NoteCardViewController.h */,
 				A9166E4116A5379E003B2061 /* NoteCardViewController.m */,
 				A9ED88EF16A7DB9A00A517F5 /* NoteCardDatasource.h */,
@@ -400,13 +390,11 @@
 				A9A8CA7016A3FA8D0027364A /* DetailViewController.m in Sources */,
 				A9A8CA9716A3FC7B0027364A /* SampleAppDelgate.m in Sources */,
 				A9A8CA9E16A3FCF60027364A /* MainController.m in Sources */,
-				A9A8CAE816A402C50027364A /* CardView.m in Sources */,
 				A9166E4216A5379E003B2061 /* NoteCardViewController.m in Sources */,
 				A9ED88F116A7DB9A00A517F5 /* NoteCardDatasource.m in Sources */,
 				A91B151716B7A0A90030007D /* DemoVo.m in Sources */,
 				A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */,
 				A92F60CD16BF9FC5002B1E9A /* ICCardItem.m in Sources */,
-				A946A33A16C4EA4B00F7C885 /* ICSuperTabController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

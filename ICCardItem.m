@@ -46,6 +46,14 @@
     return self;
 }
 
+-(void) dealloc{
+    [_snapshotImg release];
+    [_scheduleController release];
+    [_delegate release];
+    [_memberController release];
+    [super dealloc];
+}
+
 -(void) redrawShadow
 {
     if (kDefaultShadowEnabled)
@@ -109,12 +117,6 @@
     [self redrawShadow];
 }
 
--(void)dealloc
-{
-    [_snapshotImg release];
-    [_scheduleController release];
-    [super dealloc];
-}
 
 -(BOOL)isNeedToInvokeDelegate:(CGFloat)translationY
 {

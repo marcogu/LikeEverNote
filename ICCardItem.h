@@ -17,9 +17,9 @@
     UIImage* snapshot;
 }
 
-@property(nonatomic, retain) UIImageView* snapshotImg;
-@property(nonatomic, retain) UIViewController<PreviewableControllerProtocol>* scheduleController;
-@property (nonatomic, strong) NSObject<ICNoteViewControllerDelegate>* delegate;
+@property (nonatomic, retain) UIImageView* snapshotImg;
+@property (nonatomic, retain) UIViewController<PreviewableControllerProtocol>* scheduleController;
+@property (nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* delegate;
 @property (nonatomic) ICControllerCardState state;
 @property (nonatomic) CGFloat panOriginOffset;
 @property (nonatomic, retain) UIViewController* memberController;
