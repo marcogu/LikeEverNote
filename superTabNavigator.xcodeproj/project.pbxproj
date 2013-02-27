@@ -139,17 +139,9 @@
 			name = vo;
 			sourceTree = "<group>";
 		};
-		A92F60C916BF9FA9002B1E9A /* icversion */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = icversion;
-			sourceTree = "<group>";
-		};
 		A9A8CA4416A3FA8D0027364A = {
 			isa = PBXGroup;
 			children = (
-				A92F60C916BF9FA9002B1E9A /* icversion */,
 				A9A8CA9416A3FAA80027364A /* class */,
 				A9A8CA5916A3FA8D0027364A /* superTabNavigator */,
 				A9A8CA8316A3FA8E0027364A /* superTabNavigatorTests */,
