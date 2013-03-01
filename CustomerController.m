@@ -11,17 +11,53 @@
 
 @interface CustomerController ()
 {
-    UIButton* _btnTest;
+    NSMutableArray* demovos;
+    int idx;
 }
-@property(nonatomic, readonly)UIButton* btnTestPop;
 @end
 
 @implementation CustomerController
+
+static int intanceCount = 0;
+// if use nib this conttruct method will be invoke.
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    idx = intanceCount;
+    intanceCount ++;
+    demovos = [DemoVo createTestData];
+    NSLog(@"customerController: initWithNibName");
+    return self;
+}
+
+// if use storyboard this construct method will be invoke
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    idx = intanceCount;
+    intanceCount ++;
+    demovos = [DemoVo createTestData];
+    NSLog(@"customerController: initWithCoder");
+    return self;
+}
+
+-(id)init{
+    self = [super init];
+    idx = intanceCount;
+    intanceCount ++;
+    demovos = [DemoVo createTestData];
+    NSLog(@"customerController: init");
+    return self;
+}
 
 -(void)loadView
 {
     [super loadView];
     [self navigateBar];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    NSLog(@"member controller view did load");
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -32,13 +68,36 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     NSLog(@"member controller did appear");
-//    [self btnTestPop];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    NSLog(@"member controller view did load");
+-(void) viewWillUnload{
+    [super viewWillUnload];
+    NSLog(@"member controller view will unload");
+}
+
+-(void) viewDidUnload{
+    [super viewDidUnload];
+    NSLog(@"member controller view did unload");
+}
+
+-(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    NSLog(@"member controller view will disappear");
+}
+
+-(void) viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    NSLog(@"member controller view did disappear");
+}
+
+-(void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+        NSLog(@"member controller view will layout sub views");
+}
+
+-(void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+        NSLog(@"member controller view did layout sub views");
 }
 
 -(void)toRootTestClickHandler{
@@ -50,24 +109,15 @@
     if (!_navigateBar) {
         _navigateBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
         [self.view addSubview:_navigateBar];
-        UIImage* backgroundImg = [UIImage imageNamed:self.info.img];
+        UIImage* backgroundImg = [UIImage imageNamed:[self getDemoVo].img];
         [_navigateBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
         self.view.backgroundColor = [UIColor yellowColor];
     }
     return _navigateBar;
 }
 
-// create a test button
--(UIButton*)btnTestPop
-{
-    if(!_btnTest)
-    {
-        _btnTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _btnTest.frame = CGRectMake(20, 70, 120, 35);
-        [_btnTest addTarget:self action:@selector(toRootTestClickHandler) forControlEvents:UIControlEventTouchDown];
-        [self.view addSubview:_btnTest];
-    }
-    return _btnTest;
+-(DemoVo*)getDemoVo{
+    return [demovos objectAtIndex:idx];
 }
 
 +(UIImage*)getSnapshotImg

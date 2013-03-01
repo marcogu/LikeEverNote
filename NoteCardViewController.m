@@ -24,7 +24,9 @@
 
 - (void) viewDidLoad
 {
-    self.dataSource = [NoteCardDatasource getSampleInstance];
+    if (!_dataSource) {
+        self.dataSource = [NoteCardDatasource getSampleInstance];
+    }
     [self reloadData];
     [super viewDidLoad];
     [self reloadInputViews];

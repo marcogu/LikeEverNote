@@ -9,7 +9,6 @@
 #import "ICNoteControllerProtocol.h"
 
 
-
 @interface NoteCardViewController : UIViewController<PreviewableControllerProtocol, ICNoteViewControllerDelegate>
 {
     NSInteger totalCards;

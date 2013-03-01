@@ -10,7 +10,7 @@
 
 @implementation DemoVo
 
-+(NSArray*)createTestData
++(NSMutableArray*)createTestData
 {
     DemoVo* demos[6];
     demos[0] = [[[DemoVo alloc] init] autorelease];
@@ -39,7 +39,7 @@
     
     
     NSArray* ary = [NSArray arrayWithObjects:demos count:6];
-    return ary;
+    return [ary mutableCopy];
 }
 
 

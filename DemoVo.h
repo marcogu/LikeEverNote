@@ -10,7 +10,5 @@
 
 @property(nonatomic, retain)NSString* img;
 @property(nonatomic, retain)NSString* title;
-
-+(NSArray*)createTestData;
-
++(NSMutableArray*)createTestData;
 @end

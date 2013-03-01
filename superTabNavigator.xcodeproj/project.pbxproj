@@ -11,6 +11,7 @@
 		A91B151716B7A0A90030007D /* DemoVo.m in Sources */ = {isa = PBXBuildFile; fileRef = A91B151616B7A0A90030007D /* DemoVo.m */; };
 		A92F60CD16BF9FC5002B1E9A /* ICCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */; };
 		A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9472B4816BA1B6B00E9DC5C /* CustomerController.m */; };
+		A97E777E16E09147000A4B89 /* CardItemRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = A97E777D16E09147000A4B89 /* CardItemRegister.m */; };
 		A9A8CA5416A3FA8D0027364A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5316A3FA8D0027364A /* UIKit.framework */; };
 		A9A8CA5616A3FA8D0027364A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5516A3FA8D0027364A /* Foundation.framework */; };
 		A9A8CA5816A3FA8D0027364A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5716A3FA8D0027364A /* CoreGraphics.framework */; };
@@ -30,7 +31,6 @@
 		A9A8CA8816A3FA8E0027364A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A9A8CA8616A3FA8E0027364A /* InfoPlist.strings */; };
 		A9A8CA8B16A3FA8E0027364A /* superTabNavigatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A8CA8A16A3FA8E0027364A /* superTabNavigatorTests.m */; };
 		A9A8CA9716A3FC7B0027364A /* SampleAppDelgate.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */; };
-		A9A8CA9E16A3FCF60027364A /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A8CA9D16A3FCF60027364A /* MainController.m */; };
 		A9A8CAA016A3FD2B0027364A /* SampleMainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */; };
 		A9A8CAEB16A40EE00027364A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CAEA16A40EE00027364A /* QuartzCore.framework */; };
 		A9EA851F16A6B9A3003BCC4E /* imgscrrentshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EA851E16A6B9A3003BCC4E /* imgscrrentshot1.png */; };
@@ -62,6 +62,8 @@
 		A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardItem.m; sourceTree = "<group>"; };
 		A9472B4716BA1B6B00E9DC5C /* CustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerController.h; sourceTree = "<group>"; };
 		A9472B4816BA1B6B00E9DC5C /* CustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerController.m; sourceTree = "<group>"; };
+		A97E777C16E09147000A4B89 /* CardItemRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardItemRegister.h; sourceTree = "<group>"; };
+		A97E777D16E09147000A4B89 /* CardItemRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardItemRegister.m; sourceTree = "<group>"; };
 		A9A8CA4F16A3FA8D0027364A /* superTabNavigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = superTabNavigator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A8CA5316A3FA8D0027364A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9A8CA5516A3FA8D0027364A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -89,8 +91,6 @@
 		A9A8CA8A16A3FA8E0027364A /* superTabNavigatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = superTabNavigatorTests.m; sourceTree = "<group>"; };
 		A9A8CA9516A3FC7B0027364A /* SampleAppDelgate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleAppDelgate.h; sourceTree = "<group>"; };
 		A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleAppDelgate.m; sourceTree = "<group>"; };
-		A9A8CA9C16A3FCF60027364A /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
-		A9A8CA9D16A3FCF60027364A /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMainStoryboard.storyboard; sourceTree = "<group>"; };
 		A9A8CAE916A407CF0027364A /* ICNoteControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICNoteControllerProtocol.h; sourceTree = "<group>"; };
 		A9A8CAEA16A40EE00027364A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -229,8 +229,6 @@
 				A9A8CAE916A407CF0027364A /* ICNoteControllerProtocol.h */,
 				A9A8CA9516A3FC7B0027364A /* SampleAppDelgate.h */,
 				A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */,
-				A9A8CA9C16A3FCF60027364A /* MainController.h */,
-				A9A8CA9D16A3FCF60027364A /* MainController.m */,
 				A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */,
 				A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */,
 				A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */,
@@ -238,6 +236,8 @@
 				A9166E4116A5379E003B2061 /* NoteCardViewController.m */,
 				A9ED88EF16A7DB9A00A517F5 /* NoteCardDatasource.h */,
 				A9ED88F016A7DB9A00A517F5 /* NoteCardDatasource.m */,
+				A97E777C16E09147000A4B89 /* CardItemRegister.h */,
+				A97E777D16E09147000A4B89 /* CardItemRegister.m */,
 				A9472B4716BA1B6B00E9DC5C /* CustomerController.h */,
 				A9472B4816BA1B6B00E9DC5C /* CustomerController.m */,
 			);
@@ -381,12 +381,12 @@
 				A9A8CA6D16A3FA8D0027364A /* MasterViewController.m in Sources */,
 				A9A8CA7016A3FA8D0027364A /* DetailViewController.m in Sources */,
 				A9A8CA9716A3FC7B0027364A /* SampleAppDelgate.m in Sources */,
-				A9A8CA9E16A3FCF60027364A /* MainController.m in Sources */,
 				A9166E4216A5379E003B2061 /* NoteCardViewController.m in Sources */,
 				A9ED88F116A7DB9A00A517F5 /* NoteCardDatasource.m in Sources */,
 				A91B151716B7A0A90030007D /* DemoVo.m in Sources */,
 				A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */,
 				A92F60CD16BF9FC5002B1E9A /* ICCardItem.m in Sources */,
+				A97E777E16E09147000A4B89 /* CardItemRegister.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
