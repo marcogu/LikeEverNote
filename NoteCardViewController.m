@@ -63,8 +63,6 @@
         NSObject<CardViewProtocol>* cdContainer = [self createNVCByDataIdx:count];
         [nvcontrollers addObject:cdContainer];
         [cdContainer release];
-
-        [self didMoveToParentViewController:self];
     }
     self.controllerCards = nvcontrollers;
 }
