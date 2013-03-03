@@ -22,9 +22,7 @@ static int intanceCount = 0;
 // if use nib this conttruct method will be invoke.
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    idx = intanceCount;
-    intanceCount ++;
-    demovos = [DemoVo createTestData];
+    [self myInit];
     NSLog(@"customerController: initWithNibName");
     return self;
 }
@@ -32,20 +30,22 @@ static int intanceCount = 0;
 // if use storyboard this construct method will be invoke
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
-    idx = intanceCount;
-    intanceCount ++;
-    demovos = [DemoVo createTestData];
+    [self myInit];
     NSLog(@"customerController: initWithCoder");
     return self;
 }
 
 -(id)init{
     self = [super init];
+    [self myInit];
+    NSLog(@"customerController: init");
+    return self;
+}
+
+-(void)myInit{
     idx = intanceCount;
     intanceCount ++;
     demovos = [DemoVo createTestData];
-    NSLog(@"customerController: init");
-    return self;
 }
 
 -(void)loadView

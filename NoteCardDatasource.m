@@ -17,9 +17,9 @@
 {
     self = [super init];
     // sample version
-    self.dataSource = [DemoVo createTestData];
+//    self.dataSource = [DemoVo createTestData];
     // TODO: real logic
-//    self.dataSource = [[NSMutableArray array] retain];
+    self.dataSource = [[NSMutableArray array] retain];
     return self;
 }
 
@@ -32,11 +32,11 @@
 - (UIViewController *)noteView:(UIViewController<PreviewableControllerProtocol>*)noteView viewControllerForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //sample:
-    DemoVo* vo = [_dataSource objectAtIndex:indexPath.row];
-    return [self getViewControllerInstanceByStoryBoard: vo];
+//    DemoVo* vo = [_dataSource objectAtIndex:indexPath.row];
+//    return [self getViewControllerInstanceByStoryBoard: vo];
     //real
-//    CardItemRegister* rg = [_dataSource objectAtIndex:indexPath.row];
-//    return [self getViewCtrlByRegister:rg];
+    CardItemRegister* rg = [_dataSource objectAtIndex:indexPath.row];
+    return [self getViewCtrlByRegister:rg];
 }
 
 - (NSInteger)numberOfControllerCardsInNoteView
@@ -90,12 +90,7 @@
         return rg.targetObject;
     }
     UIViewController* viewCtrl = [rg.targetClass alloc];
-    if ([viewCtrl respondsToSelector:@selector(initWithNavigatorURL:query:)]) {
-
-    }else{
-        [viewCtrl initWithNibName:nil bundle:nil];
-    }
-//    rg.targetObject = viewCtrl;
+    [viewCtrl initWithNibName:nil bundle:nil];
     return [viewCtrl autorelease];
 }
 

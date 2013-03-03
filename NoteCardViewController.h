@@ -8,16 +8,19 @@
 
 #import "ICNoteControllerProtocol.h"
 
+@protocol SubViewControllerSupport;
 
 @interface NoteCardViewController : UIViewController<PreviewableControllerProtocol, ICNoteViewControllerDelegate>
 {
     NSInteger totalCards;
 }
 
-@property (nonatomic, assign) id<NoteViewControllerDataSource> dataSource;
+@property (nonatomic, retain) NSObject<NoteViewControllerDataSource>* dataSource;
 @property (nonatomic, assign) NSArray* controllerCards;
 @property (nonatomic, assign) id<ICNoteViewControllerDelegate> delegate;
 
++(NoteCardViewController*)getCurrentInstance;
+-(NSObject<SubViewControllerSupport>*)getViewCtrlRegister;
 //-(CGFloat)scalingFactorForIndex:(int)index;
 //-(CGFloat)defaultVerticalOriginForIndex:(int)index;
 //@property(nonatomic, retain)UIView* view;

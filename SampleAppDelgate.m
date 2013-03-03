@@ -7,12 +7,26 @@
 //
 
 #import "SampleAppDelgate.h"
+#import "NoteCardViewController.h"
+#import "NoteCardDatasource.h"
+#import "CustomerController.h"
+
 
 @implementation SampleAppDelgate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    NSObject<SubViewControllerSupport>* cardController = [[NoteCardViewController getCurrentInstance] getViewCtrlRegister];
+    
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+    
+//    cardController.re
+    
     return YES;
 }
 

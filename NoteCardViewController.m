@@ -16,6 +16,27 @@
 
 @implementation NoteCardViewController
 
+static NoteCardViewController* _currentInstatnce;
+
++(NoteCardViewController*)getCurrentInstance
+{
+    return _currentInstatnce;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    _currentInstatnce = self;
+    self.dataSource = [NoteCardDatasource getSampleInstance];
+    return self;
+}
+
+-(void)dealloc{
+    [_dataSource release];
+    [super dealloc];
+}
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -24,9 +45,6 @@
 
 - (void) viewDidLoad
 {
-    if (!_dataSource) {
-        self.dataSource = [NoteCardDatasource getSampleInstance];
-    }
     [self reloadData];
     [super viewDidLoad];
     [self reloadInputViews];
@@ -168,5 +186,12 @@
 }
  
  */
+
+-(NSObject<SubViewControllerSupport>*)getViewCtrlRegister
+{
+    if (self.dataSource)
+        return (NSObject<SubViewControllerSupport>*)self.dataSource;
+    return nil;
+}
 
 @end
