@@ -5,9 +5,8 @@
 //  Created by marco on 13-1-15.
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
-#import <QuartzCore/QuartzCore.h>
+
 #import "NoteCardViewController.h"
-#import "ICCardItem.h"
 #import "NoteCardDatasource.h"
 #import "ICNoteControllerProtocol.h"
 
@@ -52,37 +51,14 @@ static NoteCardViewController* _currentInstatnce;
 
 #pragma mark - private method
 
--(UIImage*)drawUIView:(UIView*)target
-{
-    UIGraphicsBeginImageContextWithOptions(target.bounds.size, target.opaque, 0.0);
-    [target.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return img;
-}
-
--(NSObject<CardViewProtocol>*)createNVCByDataIdx:(int)dataIndex
-{
-    UIViewController* vc = [self.dataSource noteView:self viewControllerForRowAtIndexPath:[NSIndexPath indexPathForRow:dataIndex inSection:0]];
-    UIImage* snapshot = [self drawUIView:vc.view];
-    NSObject<CardViewProtocol>* cdContainer = [[ICCardItem alloc] initWithSnapshot:snapshot scheduler:self index:dataIndex];
-    cdContainer.delegate = self;
-    cdContainer.memberController = vc;
-    return cdContainer;
-}
-
 - (void) reloadData
 {
     totalCards = [self.dataSource numberOfControllerCardsInNoteView];
     NSMutableArray* nvcontrollers = [NSMutableArray array];
-    
     for (int count = 0; count < totalCards; count++)
-    {
-        NSObject<CardViewProtocol>* cdContainer = [self createNVCByDataIdx:count];
-        [nvcontrollers addObject:cdContainer];
-        [cdContainer release];
-    }
+        [nvcontrollers addObject:[self.dataSource cardForRowAtIdxPath:count rootCtrl:self]];
     self.controllerCards = nvcontrollers;
+    
 }
 
 - (void) reloadInputViews

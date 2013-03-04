@@ -38,7 +38,7 @@
     demos[5].title = @"temp";
     
     
-    NSArray* ary = [NSArray arrayWithObjects:demos count:6];
+    NSArray* ary = [NSArray arrayWithObjects:demos count:2];
     return [ary mutableCopy];
 }
 

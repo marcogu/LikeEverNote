@@ -120,6 +120,11 @@ static int intanceCount = 0;
     return [demovos objectAtIndex:idx];
 }
 
+-(UIView*)gestureRecognizerTarget
+{
+    return self.navigateBar;
+}
+
 +(UIImage*)getSnapshotImg
 {
     return nil;

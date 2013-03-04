@@ -6,10 +6,11 @@
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "NoteController.h"
+
 @class DemoVo;
 
-@interface CustomerController : UIViewController
+@interface CustomerController : NoteController
 @property (nonatomic, strong) DemoVo* info;
 @property(nonatomic, retain) UINavigationBar* navigateBar;
 

@@ -6,9 +6,10 @@
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
 
+
 #import "NoteCardDatasource.h"
 #import "DemoVo.h"
-
+#import "ICCardItem.h"
 #import "CardItemRegister.h"
 
 @implementation NoteCardDatasource
@@ -29,6 +30,7 @@
     [super dealloc];
 }
 
+// will depracated
 - (UIViewController *)noteView:(UIViewController<PreviewableControllerProtocol>*)noteView viewControllerForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //sample:
@@ -49,10 +51,15 @@
     return [[[NoteCardDatasource alloc] init] autorelease];
 }
 
-- (UIViewController*)topViewController
+- (UIView<CardViewProtocol>*)cardForRowAtIdxPath:(NSInteger)idx rootCtrl:(UIViewController<PreviewableControllerProtocol>*)nvcontroller
 {
-    return nil;
+    CardItemRegister* rg = [_dataSource objectAtIndex:idx];
+    UIView<CardViewProtocol>* cdContainer = [[ICCardItem alloc] initWithItem:rg scheduler:nvcontroller index:idx];
+    cdContainer.cardItem = rg;
+    return cdContainer;
 }
+
+
 
 #pragma mark - SubViewControllerSupport
 -(CardItemRegister*)registViewCtrl:(Class)vctrlClz viewPolicy:(SubViewInstancePolicy)policy
@@ -86,8 +93,8 @@
 // real logic
 -(UIViewController*)getViewCtrlByRegister:(CardItemRegister*)rg
 {
-    if (rg.policy == KeepLifePolicy && rg.targetObject) {
-        return rg.targetObject;
+    if (rg.policy == KeepLifePolicy && rg.getViewCtrl) {
+        return rg.getViewCtrl;
     }
     UIViewController* viewCtrl = [rg.targetClass alloc];
     [viewCtrl initWithNibName:nil bundle:nil];

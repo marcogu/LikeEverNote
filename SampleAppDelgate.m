@@ -21,9 +21,9 @@
     
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
     
 //    cardController.re
     

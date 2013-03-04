@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ICCardItem.h"
-#import "CustomerController.h"
+#import "CardItemRegister.h"
 
 @interface ICCardItem ()
 {
@@ -19,21 +19,26 @@
 
 @implementation ICCardItem
 
--(id)initWithSnapshot:(UIImage *)snapshotImg scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx
+-(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx
 {
-    CGRect frame = {{0,0},snapshotImg.size};
+    self.cardItem = item;
+    self.memberController = item.getViewCtrl;
+    UIImage* previewImg = [item.getViewCtrl previewImageInCording];
+    CGRect frame = {{0,0},previewImg.size};
+    NSLog(@"%@", item.getViewCtrl);
     self = [super initWithFrame:frame];
     if (self)
     {   //init local variable
+        
         index = idx;
-        snapshot = snapshotImg;
+        snapshot = previewImg;
         self.scheduleController = nvcontroller;
         // init self layout
         originY = [nvcontroller defaultVerticalOriginForIndex:index];
         [self setAutoresizesSubviews:YES];
         [self setAutoresizingMask: UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
         // create content view and add to view.
-        self.snapshotImg = [[UIImageView alloc] initWithImage:snapshotImg];
+        self.snapshotImg = [[UIImageView alloc] initWithImage:previewImg];
         [self addSubview: _snapshotImg];
         // add gensture for content view.
         panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformPanGesture:)];
@@ -55,6 +60,7 @@
     [_memberController release];
     [pressGesture release];
     [panGesture release];
+    [_cardItem release];
     [super dealloc];
 }
 
@@ -79,8 +85,11 @@
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{
             [self setState:state animated:NO];
         } completion:^(BOOL finished) {
-            [self statePrint];
-            [self pushToMemberControllerIfSelfIsCurrent];
+//            [self statePrint];
+            if (finished) {
+                [self pushToMemberControllerIfSelfIsCurrent];
+            }
+            
         }];
         return;
     }
@@ -230,29 +239,33 @@
 -(void)pushToMemberControllerIfSelfIsCurrent{
     if (self.state == ICControllerCardStateFullScreen)
     {
-        CustomerController* mc = (CustomerController*)self.memberController;
-        [mc.navigateBar addGestureRecognizer:panGesture];
+        UIViewController<NoteControllerProtocal>* mc = self.cardItem.getViewCtrl;
+        [mc.gestureRecognizerTarget addGestureRecognizer:panGesture];
         [self.scheduleController.navigationController pushViewController:self.memberController animated:NO];
+    }
+    else if(self.state == ICControllerCardStateDefault)
+    {
+        [self.cardItem validateOnBackground];
     }
 }
 
 // test method.
--(void)statePrint{
-    switch (self.state) {
-        case ICControllerCardStateFullScreen:
-            NSLog(@"state is full screen");
-            break;
-        case ICControllerCardStateDefault:
-            NSLog(@"state is default");
-            break;
-        case ICControllerCardStateHiddenTop:
-            NSLog(@"state is hidden top");
-            break;
-        case ICControllerCardStateHiddenBottom:
-            NSLog(@"state is hidden bottom");
-            break;
-        default:
-            break;
-    }
-}
+//-(void)statePrint{
+//    switch (self.state) {
+//        case ICControllerCardStateFullScreen:
+//            NSLog(@"state is full screen");
+//            break;
+//        case ICControllerCardStateDefault:
+//            NSLog(@"state is default");
+//            break;
+//        case ICControllerCardStateHiddenTop:
+//            NSLog(@"state is hidden top");
+//            break;
+//        case ICControllerCardStateHiddenBottom:
+//            NSLog(@"state is hidden bottom");
+//            break;
+//        default:
+//            break;
+//    }
+//}
 @end

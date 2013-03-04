@@ -7,12 +7,7 @@
 //
 
 #import "ICNoteControllerProtocol.h"
-
-enum{
-    OnBackGroundRelasePolicy,
-    KeepLifePolicy
-};
-typedef UInt32 SubViewInstancePolicy;
+#import "CardItemRegister.h"
 
 @class CardItemRegister;
 
