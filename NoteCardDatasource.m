@@ -17,9 +17,6 @@
 -(id)init
 {
     self = [super init];
-    // sample version
-//    self.dataSource = [DemoVo createTestData];
-    // TODO: real logic
     self.dataSource = [[NSMutableArray array] retain];
     return self;
 }
@@ -33,10 +30,6 @@
 // will depracated
 - (UIViewController *)noteView:(UIViewController<PreviewableControllerProtocol>*)noteView viewControllerForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //sample:
-//    DemoVo* vo = [_dataSource objectAtIndex:indexPath.row];
-//    return [self getViewControllerInstanceByStoryBoard: vo];
-    //real
     CardItemRegister* rg = [_dataSource objectAtIndex:indexPath.row];
     return [self getViewCtrlByRegister:rg];
 }
@@ -54,12 +47,10 @@
 - (UIView<CardViewProtocol>*)cardForRowAtIdxPath:(NSInteger)idx rootCtrl:(UIViewController<PreviewableControllerProtocol>*)nvcontroller
 {
     CardItemRegister* rg = [_dataSource objectAtIndex:idx];
-    UIView<CardViewProtocol>* cdContainer = [[ICCardItem alloc] initWithItem:rg scheduler:nvcontroller index:idx];
+    UIView<CardViewProtocol>* cdContainer = [[[ICCardItem alloc] initWithItem:rg scheduler:nvcontroller index:idx] autorelease];
     cdContainer.cardItem = rg;
     return cdContainer;
 }
-
-
 
 #pragma mark - SubViewControllerSupport
 -(CardItemRegister*)registViewCtrl:(Class)vctrlClz viewPolicy:(SubViewInstancePolicy)policy
@@ -68,6 +59,7 @@
     carditem.targetClass = vctrlClz;
     carditem.policy = policy;
     [self.dataSource addObject:carditem];
+    [carditem release];
     return carditem;
 }
 
@@ -96,9 +88,8 @@
     if (rg.policy == KeepLifePolicy && rg.getViewCtrl) {
         return rg.getViewCtrl;
     }
-    UIViewController* viewCtrl = [rg.targetClass alloc];
-    [viewCtrl initWithNibName:nil bundle:nil];
-    return [viewCtrl autorelease];
+    UIViewController* viewCtrl = [[[rg.targetClass alloc] initWithNibName:nil bundle:nil] autorelease];
+    return viewCtrl;
 }
 
 @end

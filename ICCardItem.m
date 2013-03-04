@@ -38,7 +38,7 @@
         [self setAutoresizesSubviews:YES];
         [self setAutoresizingMask: UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
         // create content view and add to view.
-        self.snapshotImg = [[UIImageView alloc] initWithImage:previewImg];
+        self.snapshotImg = [[[UIImageView alloc] initWithImage:previewImg] autorelease];
         [self addSubview: _snapshotImg];
         // add gensture for content view.
         panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformPanGesture:)];
@@ -244,7 +244,7 @@
     }
     else if(self.state == ICControllerCardStateDefault)
     {
-        [self.cardItem validateOnBackground];// here will occur a error
+        [self.cardItem validateOnBackground];
     }
 }
 

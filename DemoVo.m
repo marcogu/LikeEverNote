@@ -39,7 +39,7 @@
     
     
     NSArray* ary = [NSArray arrayWithObjects:demos count:2];
-    return [ary mutableCopy];
+    return [[ary mutableCopy] autorelease];
 }
 
 +(DemoVo*)create:(NSString*)bgImg title:(NSString*)str
