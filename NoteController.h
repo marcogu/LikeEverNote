@@ -11,8 +11,10 @@
 @protocol NoteControllerProtocal <NSObject>
 -(UIImage*)previewImageInCording;
 -(UIView*)gestureRecognizerTarget;
+@property(nonatomic, retain)NSObject* initParam;
 @end
 
 @interface NoteController : UIViewController<NoteControllerProtocal>
 -(UIImage*)drawUIView:(UIView*)target;
+@property(nonatomic, retain)NSObject* initParam;
 @end

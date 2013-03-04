@@ -10,6 +10,7 @@
 #import "NoteCardViewController.h"
 #import "NoteCardDatasource.h"
 #import "CustomerController.h"
+#import "DemoVo.h"
 
 
 @implementation SampleAppDelgate
@@ -19,13 +20,18 @@
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     NSObject<SubViewControllerSupport>* cardController = [[NoteCardViewController getCurrentInstance] getViewCtrlRegister];
     
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
-//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
-//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
-//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy];
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"premium-header-mid-skinny.png" title:@"Go Premium"]];
     
-//    cardController.re
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Places"]];
+    
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Tags"]];
+    
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Notebooks"]];
+    
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"All Notes"]];
+    
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"temp"]];
+
     
     return YES;
 }

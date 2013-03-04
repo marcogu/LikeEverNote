@@ -10,7 +10,7 @@
 
 @implementation DemoVo
 
-+(NSMutableArray*)createTestData
++(NSMutableArray*)createTestDatas
 {
     DemoVo* demos[6];
     demos[0] = [[[DemoVo alloc] init] autorelease];
@@ -40,6 +40,14 @@
     
     NSArray* ary = [NSArray arrayWithObjects:demos count:2];
     return [ary mutableCopy];
+}
+
++(DemoVo*)create:(NSString*)bgImg title:(NSString*)str
+{
+    DemoVo* value = [[[DemoVo alloc] init] autorelease];
+    value.img = bgImg;
+    value.title = str;
+    return value;
 }
 
 

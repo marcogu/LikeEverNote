@@ -10,5 +10,6 @@
 
 @property(nonatomic, retain)NSString* img;
 @property(nonatomic, retain)NSString* title;
-+(NSMutableArray*)createTestData;
++(NSMutableArray*)createTestDatas;
++(DemoVo*)create:(NSString*)bgImg title:(NSString*)str;
 @end

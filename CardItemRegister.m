@@ -21,6 +21,7 @@
     if(!_targetObject)
     {
         _targetObject = [[_targetClass alloc] initWithNibName:nil bundle:nil];
+        _targetObject.initParam = self.params;
     }
     return _targetObject;
 }

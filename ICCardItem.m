@@ -22,7 +22,7 @@
 -(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx
 {
     self.cardItem = item;
-    self.memberController = item.getViewCtrl;
+//    self.memberController = item.getViewCtrl;
     UIImage* previewImg = [item.getViewCtrl previewImageInCording];
     CGRect frame = {{0,0},previewImg.size};
     NSLog(@"%@", item.getViewCtrl);
@@ -57,7 +57,6 @@
     [_snapshotImg release];
     [_scheduleController release];
     [_delegate release];
-    [_memberController release];
     [pressGesture release];
     [panGesture release];
     [_cardItem release];
@@ -241,11 +240,11 @@
     {
         UIViewController<NoteControllerProtocal>* mc = self.cardItem.getViewCtrl;
         [mc.gestureRecognizerTarget addGestureRecognizer:panGesture];
-        [self.scheduleController.navigationController pushViewController:self.memberController animated:NO];
+        [self.scheduleController.navigationController pushViewController:_cardItem.getViewCtrl animated:NO];
     }
     else if(self.state == ICControllerCardStateDefault)
     {
-        [self.cardItem validateOnBackground];
+        [self.cardItem validateOnBackground];// here will occur a error
     }
 }
 

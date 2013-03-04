@@ -27,7 +27,7 @@
 @property (nonatomic) ICControllerCardState state;
 @property (nonatomic) CGFloat panOriginOffset;
 // the member controller instance.
-@property (nonatomic, assign) UIViewController<NoteControllerProtocal>* memberController;
+//@property (nonatomic, assign) UIViewController<NoteControllerProtocal>* memberController;
 // card item value object, the member controller instance factory.
 @property (nonatomic, retain) CardItemRegister* cardItem;
 

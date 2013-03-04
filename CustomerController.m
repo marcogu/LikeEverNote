@@ -18,11 +18,9 @@
 
 @implementation CustomerController
 
-static int intanceCount = 0;
 // if use nib this conttruct method will be invoke.
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    [self myInit];
     NSLog(@"customerController: initWithNibName");
     return self;
 }
@@ -30,22 +28,14 @@ static int intanceCount = 0;
 // if use storyboard this construct method will be invoke
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
-    [self myInit];
     NSLog(@"customerController: initWithCoder");
     return self;
 }
 
 -(id)init{
     self = [super init];
-    [self myInit];
     NSLog(@"customerController: init");
     return self;
-}
-
--(void)myInit{
-    idx = intanceCount;
-    intanceCount ++;
-    demovos = [DemoVo createTestData];
 }
 
 -(void)loadView
@@ -117,7 +107,7 @@ static int intanceCount = 0;
 }
 
 -(DemoVo*)getDemoVo{
-    return [demovos objectAtIndex:idx];
+    return (DemoVo*)self.initParam;
 }
 
 -(UIView*)gestureRecognizerTarget
