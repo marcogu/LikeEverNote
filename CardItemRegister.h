@@ -15,6 +15,8 @@ enum{
 };
 typedef UInt32 SubViewInstancePolicy;
 
+@protocol CardViewProtocol;
+
 @interface CardItemRegister : NSObject
 {
     UIViewController<NoteControllerProtocal>* _targetObject;
@@ -22,6 +24,7 @@ typedef UInt32 SubViewInstancePolicy;
 @property (nonatomic, assign) Class targetClass;
 @property (nonatomic) int  policy;
 @property (nonatomic, retain) NSObject* params;
+@property (nonatomic, assign) UIView<CardViewProtocol>* cardInstance;
 
 -(UIViewController<NoteControllerProtocal>*)getViewCtrl;
 -(void)validateOnBackground;

@@ -24,14 +24,13 @@
     self.cardItem = item;
     UIImage* previewImg = [item.getViewCtrl previewImageInCording];
     CGRect frame = {{0,0},previewImg.size};
-    NSLog(@"%@", item.getViewCtrl);
     self = [super initWithFrame:frame];
     if (self)
     {   //init local variable
-        
         index = idx;
         snapshot = previewImg;
         self.scheduleController = nvcontroller;
+        item.cardInstance = self;
         // init self layout
         originY = [nvcontroller defaultVerticalOriginForIndex:index];
         [self setAutoresizesSubviews:YES];
@@ -135,6 +134,9 @@
                                    (self.state == ICControllerCardStateDefault && self.frame.origin.y > originY));
     if (rs)
     {
+        if (!self.delegate) {
+            self.delegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController;
+        }
         if ([self.delegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
             [self.delegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
     }
@@ -249,6 +251,10 @@
 
 -(NSInteger)getCardIndex{
     return index;
+}
+
+-(CGPoint) origin {
+    return CGPointMake(0, originY);
 }
 
 // test method.

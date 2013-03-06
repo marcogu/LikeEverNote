@@ -47,6 +47,9 @@
 - (UIView<CardViewProtocol>*)cardForRowAtIdxPath:(NSInteger)idx rootCtrl:(UIViewController<PreviewableControllerProtocol>*)nvcontroller
 {
     CardItemRegister* rg = [_dataSource objectAtIndex:idx];
+    if (rg.cardInstance) {
+        return rg.cardInstance;
+    }
     UIView<CardViewProtocol>* cdContainer = [[[ICCardItem alloc] initWithItem:rg scheduler:nvcontroller index:idx] autorelease];
     cdContainer.cardItem = rg;
     return cdContainer;
