@@ -94,6 +94,26 @@ static NoteCardViewController* _currentInstatnce;
 }
 
 #pragma mark - Delegate implementation for KLControllerCard
+/*
+-(void) controllerCard:(UIView<CardViewProtocol>*)card didUpdatePanPercentage:(CGFloat) percentage{
+    if (card.state == ICControllerCardStateFullScreen)
+    {
+        for (int i=card.index; i<self.dataSource.numberOfControllerCardsInNoteView; i++) {
+            UIView<CardViewProtocol>* crutCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            CGFloat yCoordinate = (CGFloat) crutCard.origin.y * [card percentageDistanceTravelled];
+            [crutCard setYCoordinate:yCoordinate];
+        }
+    }
+    else if(card.state == ICControllerCardStateDefault)
+    {
+        for (int i=card.index; i>=0; i--) {
+            UIView<CardViewProtocol>* crutCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            CGFloat deltaDistance = card.frame.origin.y - card.origin.y;
+            CGFloat yCoordinate = crutCard.origin.y + deltaDistance;
+            [crutCard setYCoordinate: yCoordinate];
+        }
+    }
+}*/
 
 //这个方法提供其他非当前card动画。暂时忽略
 -(void) controllerCard:(NSObject<CardViewProtocol>*)controllerCard didChangeToDisplayState:(ICControllerCardState) toState fromDisplayState:(ICControllerCardState) fromState {

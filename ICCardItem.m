@@ -22,7 +22,6 @@
 -(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx
 {
     self.cardItem = item;
-//    self.memberController = item.getViewCtrl;
     UIImage* previewImg = [item.getViewCtrl previewImageInCording];
     CGRect frame = {{0,0},previewImg.size};
     NSLog(@"%@", item.getViewCtrl);
@@ -246,6 +245,10 @@
     {
         [self.cardItem validateOnBackground];
     }
+}
+
+-(NSInteger)getCardIndex{
+    return index;
 }
 
 // test method.

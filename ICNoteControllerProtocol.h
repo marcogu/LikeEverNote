@@ -55,8 +55,9 @@ typedef UInt32 ICControllerCardState;
 @protocol CardViewProtocol
 @property(nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* delegate;
 @property (nonatomic, retain) CardItemRegister* cardItem;
--(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx;
+- (id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx;
 - (void) setState:(int)state animated:(BOOL) animated;
+-(NSInteger)getCardIndex;
 @end
 
 
