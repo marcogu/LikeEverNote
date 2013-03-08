@@ -75,8 +75,11 @@ static NoteCardViewController* _currentInstatnce;
 - (CGFloat) scalingFactorForIndex: (NSInteger) index
 {
     //Items should get progressively smaller based on their index in the navigation controller array
-    CGFloat result = powf(kDefaultMinimizedScalingFactor, (totalCards - index));
-    return result;
+//    CGFloat result = powf(kDefaultMinimizedScalingFactor, (totalCards - index));
+//    NSLog(@"scale = %f", result);
+//    return result;
+    // my version
+    return 0.95;
 }
 
 - (CGFloat) defaultVerticalOriginForIndex: (NSInteger) index
@@ -96,19 +99,19 @@ static NoteCardViewController* _currentInstatnce;
 #pragma mark - Delegate implementation for KLControllerCard
 /**/
 -(void) controllerCard:(UIView<CardViewProtocol>*)card didUpdatePanPercentage:(CGFloat) percentage{
+    UIView<CardViewProtocol>* crutCard = nil;
     if (card.state == ICControllerCardStateFullScreen)
     {
-        for (int i=[card getCardIndex]; i<self.dataSource.numberOfControllerCardsInNoteView; i++) {
-//            UIView<CardViewProtocol>* crutCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
-//            CGFloat yCoordinate = (CGFloat) crutCard.origin.y * [card percentageDistanceTravelled];
-//            [crutCard setYCoordinate:yCoordinate];
+        for (int i=[card getCardIndex]; i>=0; i--) {
+            crutCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            CGFloat yCoordinate = (CGFloat) crutCard.origin.y * [card percentageDistanceTravelled];
+            [crutCard setYCoordinate:yCoordinate];
         }
     }
     else if(card.state == ICControllerCardStateDefault)
     {
-//        for (int i=[card getCardIndex]; i>=0; i--) {
         for (int i=[card getCardIndex]+1; i<self.dataSource.numberOfControllerCardsInNoteView; i++) {
-            UIView<CardViewProtocol>* crutCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            crutCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
             CGFloat deltaDistance = card.frame.origin.y - card.origin.y;
             CGFloat yCoordinate = crutCard.origin.y + deltaDistance;
             [crutCard setYCoordinate: yCoordinate];
@@ -117,78 +120,45 @@ static NoteCardViewController* _currentInstatnce;
 }
 
 //这个方法提供其他非当前card动画。暂时忽略
--(void) controllerCard:(NSObject<CardViewProtocol>*)controllerCard didChangeToState:(int)toState fromState:(int) fromState {
-    
-    NSString* strToState = toState == ICControllerCardStateDefault? @"ICControllerCardStateDefault" : (toState==ICControllerCardStateFullScreen? @"ICControllerCardStateFullScreen" : @"other");
-    
-    NSString* strFromState = fromState == ICControllerCardStateDefault? @"ICControllerCardStateDefault" : (fromState==ICControllerCardStateFullScreen? @"ICControllerCardStateFullScreen" : @"other");
-    
-    NSLog(@"toState=%@, fromState=%@",strToState, strFromState );
+-(void) controllerCard:(NSObject<CardViewProtocol>*)card didChangeToState:(int)toState fromState:(int) fromState {
+    UIView<CardViewProtocol>* tempCard = nil;
+    if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen)
+    {
+        for (int i=[card getCardIndex]-1; i>=0; i--)
+        {    
+            tempCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            [tempCard setState:ICControllerCardStateHiddenTop animated:YES];
+        }
+        for (int i=[card getCardIndex]+1; i<self.dataSource.numberOfControllerCardsInNoteView; i++)
+        {
+            tempCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            [tempCard setState:ICControllerCardStateHiddenBottom animated:YES];
+        }
+    }
+    else if (fromState == ICControllerCardStateFullScreen && toState == ICControllerCardStateDefault)
+    {
+        for (int i=[card getCardIndex]-1; i>=0; i--)
+        {
+            tempCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            [tempCard setState:ICControllerCardStateDefault animated:YES];
+        }
+        for (int i=[card getCardIndex]+1; i<self.dataSource.numberOfControllerCardsInNoteView; i++)
+        {
+            tempCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            [tempCard setState:ICControllerCardStateHiddenBottom animated:NO];
+            [tempCard setState:ICControllerCardStateDefault animated:YES];
+        }
+    }
+    else if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateDefault)
+    {
+        for (int i=[card getCardIndex]+1; i<self.dataSource.numberOfControllerCardsInNoteView; i++)
+        {
+            tempCard = [self.dataSource cardForRowAtIdxPath:i rootCtrl:self];
+            [tempCard setState:ICControllerCardStateDefault animated:YES];
+        }
+    }
     return;
-    /**
-     if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen) {
-     
-     //For all cards above the current card move them
-     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
-     [currentCard setState:ICControllerCardStateHiddenTop animated:YES];
-     }
-     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
-     [currentCard setState:ICControllerCardStateHiddenBottom animated:YES];
-     }
-     }
-     else if (fromState == ICControllerCardStateFullScreen && toState == ICControllerCardStateDefault) {
-     //For all cards above the current card move them back to default state
-     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardAboveCard:controllerCard]) {
-     [currentCard setState:ICControllerCardStateDefault animated:YES];
-     }
-     //For all cards below the current card move them back to default state
-     for (NSObject<CardViewProtocol>* currentCard  in [self controllerCardBelowCard:controllerCard]) {
-     [currentCard setState:ICControllerCardStateHiddenBottom animated:NO];
-     [currentCard setState:ICControllerCardStateDefault animated:YES];
-     }
-     }
-     else if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateDefault){
-     //If the current state is default and the user does not travel far enough to kick into a new state, then  return all cells back to their default state
-     for (NSObject<CardViewProtocol>* cardBelow in [self controllerCardBelowCard: controllerCard]) {
-     [cardBelow setState:ICControllerCardStateDefault animated:YES];
-     }
-     }
-     
-     //Notify the delegate of the change
-     if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToDisplayState:fromDisplayState:)]) {
-     [self.delegate controllerCard:controllerCard didChangeToState:toState fromState:fromState];
-     }
-     */
 }
-
-/*
-- (NSArray*) controllerCardAboveCard:(NSObject<CardViewProtocol>*) card
-{
-    NSInteger index = [self.controllerCards indexOfObject:card];
-    
-    return [self.controllerCards filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CardView* controllerCard, NSDictionary *bindings) {
-        NSInteger currentIndex = [self.controllerCards indexOfObject:controllerCard];
-        
-        //Only return cards with an index less than the one being compared to
-        return index > currentIndex;
-    }]];
-}
- 
-
-
-- (NSArray*) controllerCardBelowCard:(NSObject<CardViewProtocol>*) card
-{
-    NSInteger index = [self.controllerCards indexOfObject: card];
-    
-    return [self.controllerCards filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CardView* controllerCard, NSDictionary *bindings) {
-        NSInteger currentIndex = [self.controllerCards indexOfObject:controllerCard];
-        
-        //Only return cards with an index greater than the one being compared to
-        return index < currentIndex;
-    }]];
-}
- 
- */
 
 -(NSObject<SubViewControllerSupport>*)getViewCtrlRegister
 {
