@@ -31,6 +31,7 @@
         snapshot = previewImg;
         self.scheduleController = nvcontroller;
         item.cardInstance = self;
+        self.delegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController; //will delete
         // init self layout
         originY = [nvcontroller defaultVerticalOriginForIndex:index];
         [self setAutoresizesSubviews:YES];
@@ -134,9 +135,6 @@
                                    (self.state == ICControllerCardStateDefault && self.frame.origin.y > originY));
     if (rs)
     {
-        if (!self.delegate) {
-            self.delegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController;
-        }
         if ([self.delegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
             [self.delegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
     }

@@ -9,9 +9,6 @@
 #import "NoteController.h"
 
 @class DemoVo;
-
 @interface CustomerController : NoteController
 @property(nonatomic, retain) UINavigationBar* navigateBar;
-
-+(UIImage*)getSnapshotImg;
 @end

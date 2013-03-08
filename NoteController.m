@@ -15,6 +15,11 @@
 
 @implementation NoteController
 
+-(void)dealloc{
+    [self.navigateBar release];
+    [super dealloc];
+}
+
 -(UIImage*)previewImageInCording
 {
     return [self drawUIView:self.view];
@@ -29,9 +34,17 @@
     return img;
 }
 
+-(UINavigationBar*)navigateBar{
+    if (!_navigateBar) {
+        _navigateBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+        [self.view addSubview:_navigateBar];
+    }
+    return _navigateBar;
+}
+
 -(UIView*)gestureRecognizerTarget
 {
-    return self.navigationController.navigationBar;
+    return self.navigateBar;
 }
 
 

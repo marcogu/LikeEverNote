@@ -17,4 +17,5 @@
 @interface NoteController : UIViewController<NoteControllerProtocal>
 -(UIImage*)drawUIView:(UIView*)target;
 @property(nonatomic, retain)NSObject* initParam;
+@property(nonatomic, retain) UINavigationBar* navigateBar;
 @end

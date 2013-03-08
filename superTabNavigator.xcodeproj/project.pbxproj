@@ -63,8 +63,8 @@
 		A92DA33916E4760400F35DEE /* NoteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteController.m; sourceTree = "<group>"; };
 		A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardItem.h; sourceTree = "<group>"; };
 		A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardItem.m; sourceTree = "<group>"; };
-		A9472B4716BA1B6B00E9DC5C /* CustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerController.h; sourceTree = "<group>"; };
-		A9472B4816BA1B6B00E9DC5C /* CustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerController.m; sourceTree = "<group>"; };
+		A9472B4716BA1B6B00E9DC5C /* CustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomerController.h; path = ../CustomerController.h; sourceTree = "<group>"; };
+		A9472B4816BA1B6B00E9DC5C /* CustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomerController.m; path = ../CustomerController.m; sourceTree = "<group>"; };
 		A97E777C16E09147000A4B89 /* CardItemRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardItemRegister.h; sourceTree = "<group>"; };
 		A97E777D16E09147000A4B89 /* CardItemRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardItemRegister.m; sourceTree = "<group>"; };
 		A9A8CA4F16A3FA8D0027364A /* superTabNavigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = superTabNavigator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,8 +92,8 @@
 		A9A8CA8716A3FA8E0027364A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A9A8CA8916A3FA8E0027364A /* superTabNavigatorTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = superTabNavigatorTests.h; sourceTree = "<group>"; };
 		A9A8CA8A16A3FA8E0027364A /* superTabNavigatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = superTabNavigatorTests.m; sourceTree = "<group>"; };
-		A9A8CA9516A3FC7B0027364A /* SampleAppDelgate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleAppDelgate.h; sourceTree = "<group>"; };
-		A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleAppDelgate.m; sourceTree = "<group>"; };
+		A9A8CA9516A3FC7B0027364A /* SampleAppDelgate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleAppDelgate.h; path = ../SampleAppDelgate.h; sourceTree = "<group>"; };
+		A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SampleAppDelgate.m; path = ../SampleAppDelgate.m; sourceTree = "<group>"; };
 		A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMainStoryboard.storyboard; sourceTree = "<group>"; };
 		A9A8CAE916A407CF0027364A /* ICNoteControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICNoteControllerProtocol.h; sourceTree = "<group>"; };
 		A9A8CAEA16A40EE00027364A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -140,6 +140,7 @@
 				A91B151616B7A0A90030007D /* DemoVo.m */,
 			);
 			name = vo;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		A9A8CA4416A3FA8D0027364A = {
@@ -177,9 +178,14 @@
 		A9A8CA5916A3FA8D0027364A /* superTabNavigator */ = {
 			isa = PBXGroup;
 			children = (
+				A91B151316B7A0940030007D /* vo */,
 				A9A8CA5A16A3FA8D0027364A /* Supporting Files */,
 				A9A8CA6216A3FA8D0027364A /* AppDelegate.h */,
 				A9A8CA6316A3FA8D0027364A /* AppDelegate.m */,
+				A9A8CA9516A3FC7B0027364A /* SampleAppDelgate.h */,
+				A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */,
+				A9472B4716BA1B6B00E9DC5C /* CustomerController.h */,
+				A9472B4816BA1B6B00E9DC5C /* CustomerController.m */,
 				A9A8CA6B16A3FA8D0027364A /* MasterViewController.h */,
 				A9A8CA6C16A3FA8D0027364A /* MasterViewController.m */,
 				A9A8CA6E16A3FA8D0027364A /* DetailViewController.h */,
@@ -228,10 +234,7 @@
 		A9A8CA9416A3FAA80027364A /* class */ = {
 			isa = PBXGroup;
 			children = (
-				A91B151316B7A0940030007D /* vo */,
 				A9A8CAE916A407CF0027364A /* ICNoteControllerProtocol.h */,
-				A9A8CA9516A3FC7B0027364A /* SampleAppDelgate.h */,
-				A9A8CA9616A3FC7B0027364A /* SampleAppDelgate.m */,
 				A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */,
 				A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */,
 				A9A8CA9F16A3FD2B0027364A /* SampleMainStoryboard.storyboard */,
@@ -243,8 +246,6 @@
 				A97E777D16E09147000A4B89 /* CardItemRegister.m */,
 				A92DA33816E4760400F35DEE /* NoteController.h */,
 				A92DA33916E4760400F35DEE /* NoteController.m */,
-				A9472B4716BA1B6B00E9DC5C /* CustomerController.h */,
-				A9472B4816BA1B6B00E9DC5C /* CustomerController.m */,
 			);
 			name = class;
 			sourceTree = "<group>";

@@ -117,7 +117,13 @@ static NoteCardViewController* _currentInstatnce;
 }
 
 //这个方法提供其他非当前card动画。暂时忽略
--(void) controllerCard:(NSObject<CardViewProtocol>*)controllerCard didChangeToDisplayState:(ICControllerCardState) toState fromDisplayState:(ICControllerCardState) fromState {
+-(void) controllerCard:(NSObject<CardViewProtocol>*)controllerCard didChangeToState:(int)toState fromState:(int) fromState {
+    
+    NSString* strToState = toState == ICControllerCardStateDefault? @"ICControllerCardStateDefault" : (toState==ICControllerCardStateFullScreen? @"ICControllerCardStateFullScreen" : @"other");
+    
+    NSString* strFromState = fromState == ICControllerCardStateDefault? @"ICControllerCardStateDefault" : (fromState==ICControllerCardStateFullScreen? @"ICControllerCardStateFullScreen" : @"other");
+    
+    NSLog(@"toState=%@, fromState=%@",strToState, strFromState );
     return;
     /**
      if (fromState == ICControllerCardStateDefault && toState == ICControllerCardStateFullScreen) {

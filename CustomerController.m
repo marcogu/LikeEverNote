@@ -41,7 +41,12 @@
 -(void)loadView
 {
     [super loadView];
-    [self navigateBar];
+    UIImage* backgroundImg = [UIImage imageNamed:[self getDemoVo].img];
+    [self.navigateBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
+}
+
+-(DemoVo*)getDemoVo{
+    return (DemoVo*)self.initParam;
 }
 
 - (void)viewDidLoad
@@ -82,43 +87,11 @@
 
 -(void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
-        NSLog(@"member controller view will layout sub views");
+    NSLog(@"member controller view will layout sub views");
 }
 
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-        NSLog(@"member controller view did layout sub views");
+    NSLog(@"member controller view did layout sub views");
 }
-
--(void)toRootTestClickHandler{
-    NSLog(@"btn touched");
-    [self.navigationController popViewControllerAnimated:NO];
-}
-
--(UINavigationBar*)navigateBar{
-    if (!_navigateBar) {
-        _navigateBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-        [self.view addSubview:_navigateBar];
-        UIImage* backgroundImg = [UIImage imageNamed:[self getDemoVo].img];
-        [_navigateBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
-        self.view.backgroundColor = [UIColor yellowColor];
-    }
-    return _navigateBar;
-}
-
--(DemoVo*)getDemoVo{
-    return (DemoVo*)self.initParam;
-}
-
--(UIView*)gestureRecognizerTarget
-{
-    return self.navigateBar;
-}
-
-+(UIImage*)getSnapshotImg
-{
-    return nil;
-}
-
-
 @end
