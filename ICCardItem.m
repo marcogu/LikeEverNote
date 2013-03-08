@@ -83,11 +83,8 @@
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{
             [self setState:state animated:NO];
         } completion:^(BOOL finished) {
-//            [self statePrint];
-            if (finished) {
+            if (finished)
                 [self pushToMemberControllerIfSelfIsCurrent];
-            }
-            
         }];
         return;
     }
@@ -144,9 +141,9 @@
 -(BOOL) shouldReturnToState:(ICControllerCardState) state fromPoint:(CGPoint) point
 {
     if (state == ICControllerCardStateFullScreen)
-        return ABS(point.y) < 50;//self.navigationController.navigationBar.frame.size.height
+        return ABS(point.y) < 50;
     else if (state == ICControllerCardStateDefault)
-        return point.y > -50;//-self.navigationController.navigationBar.frame.size.height
+        return point.y > -50;
     return NO;
 }
 
@@ -161,7 +158,6 @@
 {
     CGRect rect = CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height);
     [self setFrame:rect];
-//    NSLog(@"setYCoordinate:%@", NSStringFromCGRect(rect));
 }
 
 -(void) updateScalingFactor
@@ -209,6 +205,8 @@
     {
         case UIGestureRecognizerStateBegan:
             if (self.state == ICControllerCardStateFullScreen){
+                snapshot = self.cardItem.getViewCtrl.previewImageInCording;
+                [self.snapshotImg setImage:snapshot];
                 [self.scheduleController.navigationController popViewControllerAnimated:NO];
                 [self shrinkCardToScaledSize:YES];
                 [_snapshotImg addGestureRecognizer:panGesture];
@@ -254,24 +252,4 @@
 -(CGPoint) origin {
     return CGPointMake(0, originY);
 }
-
-// test method.
-//-(void)statePrint{
-//    switch (self.state) {
-//        case ICControllerCardStateFullScreen:
-//            NSLog(@"state is full screen");
-//            break;
-//        case ICControllerCardStateDefault:
-//            NSLog(@"state is default");
-//            break;
-//        case ICControllerCardStateHiddenTop:
-//            NSLog(@"state is hidden top");
-//            break;
-//        case ICControllerCardStateHiddenBottom:
-//            NSLog(@"state is hidden bottom");
-//            break;
-//        default:
-//            break;
-//    }
-//}
 @end

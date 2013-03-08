@@ -11,9 +11,11 @@
 
 @interface CustomerController ()
 {
-    NSMutableArray* demovos;
-    int idx;
+    UILabel* _labContent;
+    UIButton* _btnChangeContent;
 }
+@property(nonatomic, readonly)UILabel* labContent;
+@property(nonatomic, readonly)UIButton* btnChangeContent;
 @end
 
 @implementation CustomerController
@@ -38,11 +40,20 @@
     return self;
 }
 
+-(void)dealloc{
+    [_labContent release];
+    [_btnChangeContent release];
+    [super dealloc];
+}
+
 -(void)loadView
 {
     [super loadView];
     UIImage* backgroundImg = [UIImage imageNamed:[self getDemoVo].img];
     [self.navigateBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.labContent.text = [NSString stringWithFormat:@"%@", [NSDate date]];
+    [self.btnChangeContent addTarget:self action:@selector(updateContent) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(DemoVo*)getDemoVo{
@@ -93,5 +104,29 @@
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     NSLog(@"member controller view did layout sub views");
+}
+
+-(UILabel*)labContent{
+    if(!_labContent){
+        _labContent = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, 260, 16)];
+        _labContent.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_labContent];
+    }
+    return _labContent;
+}
+
+-(UIButton*)btnChangeContent{
+    if (!_btnChangeContent) {
+        _btnChangeContent = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_btnChangeContent setTitle:@"更新事件" forState:UIControlStateNormal];
+        _btnChangeContent.frame = CGRectMake(225, 70, 0, 0);
+        [_btnChangeContent sizeToFit];
+        [self.view addSubview:_btnChangeContent];
+    }
+    return _btnChangeContent;
+}
+
+-(void)updateContent{
+    self.labContent.text = [NSString stringWithFormat:@"%@", [NSDate date]];
 }
 @end
