@@ -171,7 +171,7 @@
     [self updateScalingFactor];
     if (animated)
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self expandCardToFullSize:NO];} completion:^(BOOL finished) {
-            NSLog(@"full screen complete");
+//            NSLog(@"full screen complete");
         }];
     else
         [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
@@ -182,7 +182,7 @@
     [self updateScalingFactor];
     if (animated)
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self shrinkCardToScaledSize:NO];} completion:^(BOOL finished) {
-            NSLog(@"scale size complete");
+//            NSLog(@"scale size complete");
         }];
     else
         [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
@@ -200,7 +200,6 @@
 {
     CGPoint location = [recognizer locationInView: _scheduleController.view];
     CGPoint translation = [recognizer translationInView: self];
-    
     switch (recognizer.state)
     {
         case UIGestureRecognizerStateBegan:
@@ -216,7 +215,11 @@
             
         case UIGestureRecognizerStateChanged:
             [self isNeedToInvokeDelegate:translation.y];
-            [self setYCoordinate: location.y - self.panOriginOffset];
+            if (self.state == ICControllerCardStateFullScreen) {
+                [self setYCoordinate: location.y - self.panOriginOffset + 20];
+            }else{
+                [self setYCoordinate: location.y - self.panOriginOffset];
+            }
             break;
             //Check if it should return to the origin location
         case UIGestureRecognizerStateEnded:
