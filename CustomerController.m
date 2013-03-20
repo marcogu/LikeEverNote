@@ -8,6 +8,7 @@
 
 #import "CustomerController.h"
 #import "DemoVo.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface CustomerController ()
 {
@@ -49,6 +50,11 @@
 -(void)loadView
 {
     [super loadView];
+    
+    [self.view.layer setCornerRadius: 5.0];
+    [self.view setClipsToBounds:YES];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
+    
     UIImage* backgroundImg = [UIImage imageNamed:[self getDemoVo].img];
     [self.navigateBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = [UIColor whiteColor];

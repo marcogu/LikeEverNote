@@ -27,7 +27,7 @@
 
 -(UIImage*)drawUIView:(UIView*)target
 {
-    UIGraphicsBeginImageContextWithOptions(target.bounds.size, target.opaque, 0.0);
+    UIGraphicsBeginImageContextWithOptions(target.bounds.size, NO, 0.0);
     [target.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
