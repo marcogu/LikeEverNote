@@ -9,6 +9,7 @@
 #import "NoteController.h"
 
 @class DemoVo;
-@interface CustomerController : NoteController
+@interface CustomerController : UIViewController<NoteControllerProtocal>
 @property(nonatomic, retain) UINavigationBar* navigateBar;
+@property(nonatomic, retain)NSObject* initParam;
 @end

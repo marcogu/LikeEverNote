@@ -14,8 +14,13 @@
 @property(nonatomic, retain)NSObject* initParam;
 @end
 
-@interface NoteController : UIViewController<NoteControllerProtocal>
+//@interface NoteController : UIViewController<NoteControllerProtocal>
+//-(UIImage*)drawUIView:(UIView*)target;
+//@property(nonatomic, retain)NSObject* initParam;
+//@property(nonatomic, retain) UINavigationBar* navigateBar;
+//@end
+
+@interface UIViewController(ICExtention)
+-(UIImage*)previewImageInCording;
 -(UIImage*)drawUIView:(UIView*)target;
-@property(nonatomic, retain)NSObject* initParam;
-@property(nonatomic, retain) UINavigationBar* navigateBar;
 @end

@@ -135,4 +135,16 @@
 -(void)updateContent{
     self.labContent.text = [NSString stringWithFormat:@"%@", [NSDate date]];
 }
+
+-(UINavigationBar*)navigateBar{
+    if (!_navigateBar) {
+        _navigateBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+        [self.view addSubview:_navigateBar];
+    }
+    return _navigateBar;
+}
+
+-(UIView*)gestureRecognizerTarget{
+    return self.navigateBar;
+}
 @end

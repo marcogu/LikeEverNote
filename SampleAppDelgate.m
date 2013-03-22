@@ -10,6 +10,7 @@
 #import "NoteCardViewController.h"
 #import "NoteCardDatasource.h"
 #import "CustomerController.h"
+#import "ModalGroupController.h"
 #import "DemoVo.h"
 
 
@@ -28,7 +29,9 @@
     
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Notebooks"]];
     
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"All Notes"]];
+//    ModalGroupController* _targetController = [[ModalGroupController alloc] initWithNibName:nil bundle:nil];
+//    [self.navigationController pushViewController:_targetController animated:YES];
+    [cardController registViewCtrl:[ModalGroupController class] viewPolicy:OnBackGroundRelasePolicy];
     
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"temp"]];
 
