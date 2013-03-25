@@ -14,6 +14,11 @@
 
 @synthesize reciverAvatar, reciverName, groupLogoView, reciverRole;
 
+-(void)dealloc{
+    [_dataValue release];
+    [super dealloc];
+}
+
 #pragma mark - private
 
 -(TTStyle*)createGroupLogoStyle:(UIColor*)color

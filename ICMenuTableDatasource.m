@@ -15,7 +15,7 @@
 -(id)initWithSections:(NSArray*)datas{
     self = [super init];
     if (self) {
-        self.sections = [datas mutableCopy];
+        _sections = [datas mutableCopy];
     }
     return self;
 }

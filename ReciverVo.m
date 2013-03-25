@@ -16,6 +16,7 @@
     [_memberList release];
     [_avatar release];
     [_otherInfo release];
+    [_groupType release];
     [_b release];
     [_g release];
     [_r release];

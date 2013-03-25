@@ -70,7 +70,7 @@
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_titleLabel release];
-    [_actionPickerView release];
+//    [_actionPickerView release];
     [_items release];
     [_selectedItem release];
     [super dealloc];
@@ -78,7 +78,7 @@
 
 -(UIView*)actionPickerView{
     if(!_actionPickerView){
-        _actionPickerView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - 40.0f, 7.0f, 30.0f, 30.0f)];
+        _actionPickerView = [[[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - 40.0f, 7.0f, 30.0f, 30.0f)] autorelease];
         _actionPickerView.layer.cornerRadius = 15.0f;
         _actionPickerView.layer.borderWidth = 1.0f;
         _actionPickerView.layer.borderColor = [UIColor darkGrayColor].CGColor;
@@ -90,7 +90,7 @@
 
 -(UILabel*)titleLabel{
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100.0f, 12.0f, self.frame.size.width - 70.0f, 20.0f)];
+        _titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(100.0f, 12.0f, self.frame.size.width - 70.0f, 20.0f)] autorelease];
         _titleLabel.font = [UIFont systemFontOfSize:18.0f];
         _titleLabel.numberOfLines = 0;
         _titleLabel.backgroundColor = [UIColor clearColor];
@@ -233,7 +233,7 @@
 
 -(UITextField*)searchInput{
     if (!_searchInput) {
-        _searchInput = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 265, 20)];
+        _searchInput = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 265, 20)] autorelease];
         _searchInput.font = [UIFont systemFontOfSize:14];
         _searchInput.textColor = [UIColor whiteColor];
         _searchInput.center = CGPointMake(168, 16.f);
