@@ -53,7 +53,6 @@
     
     [self.view.layer setCornerRadius: 5.0];
     [self.view setClipsToBounds:YES];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
     
     UIImage* backgroundImg = [UIImage imageNamed:[self getDemoVo].img];
     [self.navigateBar setBackgroundImage:backgroundImg forBarMetrics:UIBarMetricsDefault];

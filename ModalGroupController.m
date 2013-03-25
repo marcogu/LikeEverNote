@@ -15,6 +15,7 @@
 
 @interface ModalGroupController ()<ICRecipientPickerDataSource,ICPickerViewDelegate>{
     ICRecipientPicker* _picker;
+    SelectorTableViewDelegate* _tbdelegate;
 }
 @property(nonatomic, retain)ICMenuTableDatasource* tableViewDataSource;
 @end
@@ -30,14 +31,21 @@
     
     self.tableViewDataSource = [ICMenuTableDatasource createDemoSections:_tableView];
     self.tableView.dataSource = self.tableViewDataSource;
-    SelectorTableViewDelegate* tbdelegate = [[SelectorTableViewDelegate alloc] initWithAboveViewOnTable:_picker belowViewOnTable:nil];
-    tbdelegate.ds = _tableViewDataSource;
-    self.tableView.delegate = tbdelegate;
+    _tbdelegate = [[SelectorTableViewDelegate alloc] initWithAboveViewOnTable:_picker belowViewOnTable:nil];
+    _tbdelegate.ds = _tableViewDataSource;
+    _tableView.delegate = _tbdelegate;
     
     self.picker.datasource = self;
     self.picker.pickViewDelegate = self;
     
     _titlBar.titleLabel.text = @"请选择联系人";
+}
+
+-(void)dealloc{
+    [_tableViewDataSource release];
+    [_tbdelegate release];
+    [_initParam release];
+    [super dealloc];
 }
 
 -(void)loadView{
@@ -46,6 +54,8 @@
     [self picker];
     [self titlBar];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.view.layer setCornerRadius: 5.0];
+    [self.view setClipsToBounds:YES];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
@@ -108,7 +118,7 @@
 
 -(ICRecipientPickerItem *)recipientPicker:(ICRecipientPicker*)pickerView itemForIndex:(NSInteger)index{
     Reciver* vo = [self.selectedRecivers objectAtIndex:index];
-    ICRecipientPickerItem* item = [[ICRecipientPickerItem alloc] init];
+    ICRecipientPickerItem* item = [[[ICRecipientPickerItem alloc] init] autorelease];
     item.textLabel.text = vo.reciverName;
     item.object = vo;
     return item;

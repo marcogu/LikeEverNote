@@ -67,7 +67,7 @@ UIColor* UIColorFromRGB(NSInteger red, NSInteger green, NSInteger blue, NSIntege
     
     _pickerTextLabelPadding = ITEM_TEXTLABELPADDING_LEFT_AND_RIGHT;
     _highlightTouches = YES;
-    self.backgroundColor = DEFAULT_BG_COLOR;
+    self.backgroundColor = [DEFAULT_BG_COLOR autorelease];
 }
 
 -(UILabel*)textLabel{

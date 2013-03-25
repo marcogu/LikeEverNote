@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "NoteCardViewController.h"
 #import "NoteCardDatasource.h"
 #import "ICNoteControllerProtocol.h"
@@ -44,6 +45,10 @@ static NoteCardViewController* _currentInstatnce;
 
 - (void) viewDidLoad
 {
+    [self.view.layer setCornerRadius: 5.0];
+    [self.view setClipsToBounds:YES];
+//    [self.view setBackgroundColor: [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-dark-gray-tex.png"]]];
+    [self.view setBackgroundColor:[UIColor darkGrayColor]];
     [self reloadData];
     [super viewDidLoad];
     [self reloadInputViews];

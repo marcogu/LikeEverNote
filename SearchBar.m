@@ -286,7 +286,7 @@
     // test logic
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"searchBarResultCell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] init];
+        cell = [[[UITableViewCell alloc] init] autorelease];
     }
     cell.textLabel.text = [_selectedItem objectAtIndex:indexPath.row];
     return cell;

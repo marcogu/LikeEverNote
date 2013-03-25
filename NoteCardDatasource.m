@@ -17,7 +17,9 @@
 -(id)init
 {
     self = [super init];
-    self.dataSource = [[NSMutableArray array] retain];
+    if (self) {
+        self.dataSource = [[NSMutableArray array] retain];
+    }
     return self;
 }
 

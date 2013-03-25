@@ -10,6 +10,18 @@
 
 @implementation Reciver
 
+-(void)dealloc{
+    [_reciverId release];
+    [_reciverName release];
+    [_memberList release];
+    [_avatar release];
+    [_otherInfo release];
+    [_b release];
+    [_g release];
+    [_r release];
+    [super dealloc];
+}
+
 
 +(NSArray*)getDemoDatas{
     Reciver* member = nil;

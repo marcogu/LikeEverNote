@@ -25,7 +25,7 @@ typedef enum {
 @property (nonatomic, readonly) NSUInteger contentNumberOfRow;
 @property (nonatomic, readonly) NSUInteger numberOfRow;
 @property (nonatomic, assign) UITableView* tableView;
-@property(nonatomic,assign) id controllerDelegate;
+@property (nonatomic,assign) id controllerDelegate;
 @property (nonatomic, assign) BOOL open;
 
 - (id) initWithTableView:(UITableView*)tableView

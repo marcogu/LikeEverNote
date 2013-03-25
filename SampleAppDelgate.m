@@ -35,7 +35,7 @@
     
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"temp"]];
 
-    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
     return YES;
 }
 

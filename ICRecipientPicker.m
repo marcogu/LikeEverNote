@@ -38,6 +38,11 @@
     return self;
 }
 
+-(void)dealloc{
+    [_items release];
+    [super dealloc];
+}
+
 -(void)removeItemAtIndex:(NSInteger)index animated:(BOOL)animated{
     ICRecipientPickerItem* item = [_items objectAtIndex:index];
     [_items removeObject:item];

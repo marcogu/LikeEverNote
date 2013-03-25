@@ -20,6 +20,11 @@
     return self;
 }
 
+-(void)dealloc{
+    [_sections release];
+    [super dealloc];
+}
+
 #pragma mark - TableViewDataSource method.
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -50,6 +55,7 @@
         agroup.titleData = obj;
         agroup.contentDatas = ((Reciver*)obj).memberList;
         [sections addObject:agroup];
+        [agroup release];
     }];
     ICMenuTableDatasource* result = [[[ICMenuTableDatasource alloc] initWithSections:sections] autorelease];
     return result;
