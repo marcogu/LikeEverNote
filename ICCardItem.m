@@ -37,8 +37,7 @@
         [self setAutoresizesSubviews:YES];
         [self setAutoresizingMask: UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
         // create content view and add to view.
-        self.snapshotImg = [[[UIImageView alloc] initWithImage:previewImg] autorelease];
-        [self addSubview: _snapshotImg];
+        [self snapshotImg];
         // add gensture for content view.
         panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformPanGesture:)];
         pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformLongPress:)];
@@ -50,6 +49,17 @@
               animated:NO];
     }
     return self;
+}
+
+-(UIImageView*)snapshotImg{
+    if (!_snapshotImg) {
+        _snapshotImg = [[UIImageView alloc] initWithImage:snapshot];
+        _snapshotImg.layer.cornerRadius = 5;
+        _snapshotImg.clipsToBounds = YES;
+        [self addSubview: _snapshotImg];
+        [_snapshotImg release];
+    }
+    return _snapshotImg;
 }
 
 -(void) dealloc{
