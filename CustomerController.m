@@ -42,7 +42,7 @@
 }
 
 -(void)dealloc{
-    [_labContent release];
+    [self.initParam release];
     [_btnChangeContent release];
     [super dealloc];
 }
@@ -116,6 +116,7 @@
         _labContent = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, 260, 16)];
         _labContent.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:_labContent];
+        [_labContent release];
     }
     return _labContent;
 }
@@ -139,6 +140,7 @@
     if (!_navigateBar) {
         _navigateBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
         [self.view addSubview:_navigateBar];
+        [_navigateBar release];
     }
     return _navigateBar;
 }
