@@ -17,6 +17,7 @@
 }
 @property(nonatomic, readonly) UILabel* titleLabel;
 @property(nonatomic, assign) ModalGroupController* superViewController;
+
 - (void)shrinkActionPicker;
 - (void)close;
 - (void)open;

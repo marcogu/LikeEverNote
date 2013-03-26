@@ -69,8 +69,6 @@
 
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_titleLabel release];
-//    [_actionPickerView release];
     [_items release];
     [_selectedItem release];
     [super dealloc];
@@ -78,19 +76,20 @@
 
 -(UIView*)actionPickerView{
     if(!_actionPickerView){
-        _actionPickerView = [[[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - 40.0f, 7.0f, 30.0f, 30.0f)] autorelease];
+        _actionPickerView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - 40.0f, 7.0f, 30.0f, 30.0f)];
         _actionPickerView.layer.cornerRadius = 15.0f;
         _actionPickerView.layer.borderWidth = 1.0f;
         _actionPickerView.layer.borderColor = [UIColor darkGrayColor].CGColor;
         _actionPickerView.clipsToBounds = YES;
         [self addSubview:_actionPickerView];
+        [_actionPickerView release];
     }
     return _actionPickerView;
 }
 
 -(UILabel*)titleLabel{
     if (!_titleLabel) {
-        _titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(100.0f, 12.0f, self.frame.size.width - 70.0f, 20.0f)] autorelease];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100.0f, 12.0f, self.frame.size.width - 70.0f, 20.0f)];
         _titleLabel.font = [UIFont systemFontOfSize:18.0f];
         _titleLabel.numberOfLines = 0;
         _titleLabel.backgroundColor = [UIColor clearColor];
@@ -100,8 +99,57 @@
         _titleLabel.hidden = NO;
         _titleLabel.opaque = NO;
         [self addSubview:_titleLabel];
+        [_titleLabel release];
     }
     return _titleLabel;
+}
+
+-(UIButton*)searchBtn{
+    if(!_searchBtn) {
+        _searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_searchBtn addTarget:self action:@selector(reverseState) forControlEvents:UIControlEventTouchUpInside];
+        [_searchBtn setImage:[UIImage imageNamed:@"UIButtonBarSearch"] forState:UIControlStateNormal];
+        _searchBtn.frame = CGRectMake(0.0f, 0.0f, 30.0f, 30.0f);
+        _searchBtn.imageEdgeInsets = UIEdgeInsetsMake(3.0f, 3.0f, 3.0f, 3.0f);
+        _searchBtn.center = CGPointMake(15.0f, 15.0f);
+    }
+    return _searchBtn;
+}
+
+-(UITextField*)searchInput{
+    if (!_searchInput) {
+        _searchInput = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 265, 20)];
+        _searchInput.font = [UIFont systemFontOfSize:14];
+        _searchInput.textColor = [UIColor whiteColor];
+        _searchInput.center = CGPointMake(168, 16.f);
+        _searchInput.placeholder = @"请输入搜索的内容";
+        _searchInput.autocorrectionType = UITextAutocorrectionTypeNo;
+        _searchInput.clearButtonMode = UITextFieldViewModeAlways;
+        [_searchInput autorelease];
+    }
+    return _searchInput;
+}
+// here need three20. UI
+-(UIButton*)conformBtn{
+    if (!_conformBtn) {
+        _conformBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _conformBtn.frame = CGRectMake(15, 7, 40, 30);
+        [_conformBtn addTarget:self action:@selector(btnConformClick) forControlEvents:UIControlEventTouchUpInside];
+        [_conformBtn setTitle:@"确定" forState:UIControlStateNormal];
+        [self addSubview:_conformBtn];
+    }
+    return _conformBtn;
+}
+
+-(UITableView*)searchResultTable{
+    if (!_searchResultTable) {
+        _searchResultTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        [self.superViewController.view insertSubview:_searchResultTable belowSubview:self.superViewController.picker];
+        _searchResultTable.dataSource = self;
+        _searchResultTable.delegate = self;
+        [_searchResultTable release];
+    }
+    return _searchResultTable;
 }
 
 -(CAGradientLayer*)createBackgroundLayer{
@@ -217,53 +265,6 @@
     }else{
         [self open];
     }
-}
-
--(UIButton*)searchBtn{
-    if(!_searchBtn) {
-        _searchBtn = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-        [_searchBtn addTarget:self action:@selector(reverseState) forControlEvents:UIControlEventTouchUpInside];
-        [_searchBtn setImage:[UIImage imageNamed:@"UIButtonBarSearch"] forState:UIControlStateNormal];
-        _searchBtn.frame = CGRectMake(0.0f, 0.0f, 30.0f, 30.0f);
-        _searchBtn.imageEdgeInsets = UIEdgeInsetsMake(3.0f, 3.0f, 3.0f, 3.0f);
-        _searchBtn.center = CGPointMake(15.0f, 15.0f);
-    }
-    return _searchBtn;
-}
-
--(UITextField*)searchInput{
-    if (!_searchInput) {
-        _searchInput = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 265, 20)] autorelease];
-        _searchInput.font = [UIFont systemFontOfSize:14];
-        _searchInput.textColor = [UIColor whiteColor];
-        _searchInput.center = CGPointMake(168, 16.f);
-        _searchInput.placeholder = @"请输入搜索的内容";
-        _searchInput.autocorrectionType = UITextAutocorrectionTypeNo;
-        _searchInput.clearButtonMode = UITextFieldViewModeAlways;
-    }
-    return _searchInput;
-}
-// here need three20. UI 
--(UIButton*)conformBtn{
-    if (!_conformBtn) {
-        _conformBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _conformBtn.frame = CGRectMake(15, 7, 40, 30);
-        [_conformBtn addTarget:self action:@selector(btnConformClick) forControlEvents:UIControlEventTouchUpInside];
-        [_conformBtn setTitle:@"确定" forState:UIControlStateNormal];
-        [self addSubview:_conformBtn];
-    }
-    return _conformBtn;
-}
-
--(UITableView*)searchResultTable{
-    if (!_searchResultTable) {
-        _searchResultTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        [self.superViewController.view insertSubview:_searchResultTable belowSubview:self.superViewController.picker];
-        _searchResultTable.dataSource = self;
-        _searchResultTable.delegate = self;
-        [_searchResultTable release];
-    }
-    return _searchResultTable;
 }
 
 -(void)btnConformClick{

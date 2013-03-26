@@ -21,18 +21,18 @@
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     NSObject<SubViewControllerSupport>* cardController = [[NoteCardViewController getCurrentInstance] getViewCtrlRegister];
     
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"premium-header-mid-skinny.png" title:@"Go Premium"]];
-    
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Places"]];
-    
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Tags"]];
-    
-    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Notebooks"]];
+//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"premium-header-mid-skinny.png" title:@"Go Premium"]];
+//    
+//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Places"]];
+//    
+//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Tags"]];
+//    
+//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Notebooks"]];
     
 //    ModalGroupController* _targetController = [[ModalGroupController alloc] initWithNibName:nil bundle:nil];
 //    [self.navigationController pushViewController:_targetController animated:YES];
-//    [cardController registViewCtrl:[ModalGroupController class] viewPolicy:OnBackGroundRelasePolicy];
-//    
+    [cardController registViewCtrl:[ModalGroupController class] viewPolicy:OnBackGroundRelasePolicy];
+//
 //    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"temp"]];
 
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
