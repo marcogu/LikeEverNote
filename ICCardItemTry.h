@@ -7,8 +7,10 @@
 //
 
 #import "ICNoteControllerProtocol.h"
+#import <Three20/Three20.h>
 
-@interface ICCardItemTry : UIView<CardViewProtocol>
+
+@interface ICCardItemTry : TTImageView<CardViewProtocol>
 {
     CGFloat originY;
     CGFloat scalingFactor;
@@ -18,12 +20,10 @@
     UIPanGestureRecognizer* panGesture;
     UILongPressGestureRecognizer* pressGesture;
 }
-// the member controller preview image
-@property (nonatomic, retain) UIImageView* snapshotImg;
 // the card view controller
 @property (nonatomic, retain) UIViewController<PreviewableControllerProtocol>* scheduleController;
 // the card view controller delegate. will be daprecate
-@property (nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* delegate;
+@property (nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* cardCtrlDelegate;
 // card view current state.
 @property (nonatomic) ICControllerCardState state;
 @property (nonatomic) CGFloat panOriginOffset;

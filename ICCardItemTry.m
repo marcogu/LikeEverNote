@@ -7,6 +7,8 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+
+
 #import "ICCardItemTry.h"
 #import "CardItemRegister.h"
 
@@ -24,19 +26,18 @@
         snapshot = previewImg;
         self.scheduleController = nvcontroller;
         item.cardInstance = self;
-        self.delegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController; //will delete
+        self.cardCtrlDelegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController; //will delete
         // init self layout
         originY = [nvcontroller defaultVerticalOriginForIndex:index];
         [self setAutoresizesSubviews:YES];
         [self setAutoresizingMask: UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-        // create content view and add to view.
-        [self snapshotImg];
         // add gensture for content view.
         panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformPanGesture:)];
         pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformLongPress:)];
-        _snapshotImg.userInteractionEnabled = YES;
-        [_snapshotImg addGestureRecognizer:panGesture];
-        [_snapshotImg addGestureRecognizer:pressGesture];
+        [self addGestureRecognizer:panGesture];
+        [self addGestureRecognizer:pressGesture];
+        self.backgroundColor = [UIColor clearColor];
+        self.style = [self snapshotImgStyle:previewImg];
         
         [self setState:ICControllerCardStateDefault
               animated:NO];
@@ -44,20 +45,30 @@
     return self;
 }
 
--(UIImageView*)snapshotImg{
-    if (!_snapshotImg) {
-        _snapshotImg = [[UIImageView alloc] initWithImage:snapshot];
-        _snapshotImg.layer.cornerRadius = 5;
-        // 如果不使用这句,动画性能能达到最好
-        //        _snapshotImg.clipsToBounds = YES;
-        [self addSubview: _snapshotImg];
-        [_snapshotImg release];
-    }
-    return _snapshotImg;
+//-(TTImageView*)snapshotImg{
+//    if (!_snapshotImg) {
+//        _snapshotImg = [[TTImageView alloc] initWithFrame:CGRectMake(0, 0, snapshot.size.width, snapshot.size.height)];
+//        _snapshotImg.style = [self snapshotImgStyle];
+////        _snapshotImg.backgroundColor = [UIColor clearColor];
+//        [self addSubview: _snapshotImg];
+//        [_snapshotImg release];
+//    }
+//    return _snapshotImg;
+//}
+
+-(TTStyle*)snapshotImgStyle:(UIImage*)img{
+    TTStyle* result =
+    [TTShapeStyle styleWithShape:
+    [TTRoundedRectangleShape shapeWithTopLeft:5 topRight:5 bottomRight:0 bottomLeft:0] next:
+    [TTImageStyle styleWithImage:img next:nil
+//    [TTShadowStyle styleWithColor:RGBACOLOR(0,0,0,0.5) blur:4 offset:CGSizeMake(2, 2) next:
+//     nil]
+     ]];
+    return result;
 }
 
 -(void) dealloc{
-    [_snapshotImg release];
+//    [snapshot release];
     [_scheduleController release];
     [_delegate release];
     [pressGesture release];
@@ -66,19 +77,19 @@
     [super dealloc];
 }
 
--(void) redrawShadow
-{
-    if (kDefaultShadowEnabled)
-    {
-        UIBezierPath *path  =  [UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:kDefaultCornerRadius];
-        
-        [self.layer setShadowOpacity: kDefaultShadowOpacity];
-        [self.layer setShadowOffset: kDefaultShadowOffset];
-        [self.layer setShadowRadius: kDefaultShadowRadius];
-        [self.layer setShadowColor: [kDefaultShadowColor CGColor]];
-        [self.layer setShadowPath: [path CGPath]];
-    }
-}
+//-(void) redrawShadow
+//{
+//    if (kDefaultShadowEnabled)
+//    {
+//        UIBezierPath *path  =  [UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:kDefaultCornerRadius];
+//        
+//        [self.layer setShadowOpacity: kDefaultShadowOpacity];
+//        [self.layer setShadowOffset: kDefaultShadowOffset];
+//        [self.layer setShadowRadius: kDefaultShadowRadius];
+//        [self.layer setShadowColor: [kDefaultShadowColor CGColor]];
+//        [self.layer setShadowPath: [path CGPath]];
+//    }
+//}
 
 -(void) setState:(ICControllerCardState)state animated:(BOOL) animated
 {
@@ -119,15 +130,15 @@
     ICControllerCardState lastState = self.state;
     [self setState:state];
     //Notify the delegate
-    if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
-        [self.delegate controllerCard:self didChangeToState:state fromState: lastState];
+    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
+        [self.cardCtrlDelegate controllerCard:self didChangeToState:state fromState: lastState];
 }
 
--(void) setFrame:(CGRect)frame
-{
-    [super setFrame: frame];
-    [self redrawShadow];
-}
+//-(void) setFrame:(CGRect)frame
+//{
+//    [super setFrame: frame];
+//    [self redrawShadow];
+//}
 
 
 -(BOOL)isNeedToInvokeDelegate:(CGFloat)translationY
@@ -136,8 +147,8 @@
                                    (self.state == ICControllerCardStateDefault && self.frame.origin.y > originY));
     if (rs)
     {
-        if ([self.delegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
-            [self.delegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
+        if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
+            [self.cardCtrlDelegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
     }
     return rs;
 }
@@ -209,10 +220,10 @@
         case UIGestureRecognizerStateBegan:
             if (self.state == ICControllerCardStateFullScreen){
                 snapshot = self.cardItem.getViewCtrl.previewImageInCording;
-                [self.snapshotImg setImage:snapshot];
+//                [self.snapshotImg setImage:snapshot];
                 [self.scheduleController.navigationController popViewControllerAnimated:NO];
                 [self shrinkCardToScaledSize:YES];
-                [_snapshotImg addGestureRecognizer:panGesture];
+                [self addGestureRecognizer:panGesture];
             }
             self.panOriginOffset = [recognizer locationInView: self].y;
             break;

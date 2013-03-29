@@ -31,7 +31,7 @@
         snapshot = previewImg;
         self.scheduleController = nvcontroller;
         item.cardInstance = self;
-        self.delegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController; //will delete
+        self.cardCtrlDelegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController; //will delete
         // init self layout
         originY = [nvcontroller defaultVerticalOriginForIndex:index];
         [self setAutoresizesSubviews:YES];
@@ -66,7 +66,7 @@
 -(void) dealloc{
     [_snapshotImg release];
     [_scheduleController release];
-    [_delegate release];
+    [_cardCtrlDelegate release];
     [pressGesture release];
     [panGesture release];
     [_cardItem release];
@@ -126,8 +126,8 @@
     ICControllerCardState lastState = self.state;
     [self setState:state];
     //Notify the delegate
-    if ([self.delegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
-        [self.delegate controllerCard:self didChangeToState:state fromState: lastState];
+    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
+        [self.cardCtrlDelegate controllerCard:self didChangeToState:state fromState: lastState];
 }
 
 -(void) setFrame:(CGRect)frame
@@ -136,15 +136,14 @@
     [self redrawShadow];
 }
 
-
 -(BOOL)isNeedToInvokeDelegate:(CGFloat)translationY
 {
     BOOL rs = translationY > 0 && ((self.state == ICControllerCardStateFullScreen && self.frame.origin.y < originY) ||
                                    (self.state == ICControllerCardStateDefault && self.frame.origin.y > originY));
     if (rs)
     {
-        if ([self.delegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
-            [self.delegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
+        if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
+            [self.cardCtrlDelegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
     }
     return rs;
 }

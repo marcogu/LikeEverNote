@@ -53,7 +53,7 @@ typedef UInt32 ICControllerCardState;
 
 
 @protocol CardViewProtocol
-@property(nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* delegate;
+@property(nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* cardCtrlDelegate;
 @property (nonatomic, retain) CardItemRegister* cardItem;
 @property (nonatomic) ICControllerCardState state;
 @property(nonatomic, readonly) CGPoint origin;

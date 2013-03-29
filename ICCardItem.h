@@ -21,7 +21,7 @@
 // the card view controller
 @property (nonatomic, retain) UIViewController<PreviewableControllerProtocol>* scheduleController;
 // the card view controller delegate. will be daprecate
-@property (nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* delegate;
+@property (nonatomic, retain) NSObject<ICNoteViewControllerDelegate>* cardCtrlDelegate;
 // card view current state.
 @property (nonatomic) ICControllerCardState state;
 @property (nonatomic) CGFloat panOriginOffset;
