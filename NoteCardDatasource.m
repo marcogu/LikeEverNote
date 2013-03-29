@@ -9,8 +9,10 @@
 
 #import "NoteCardDatasource.h"
 #import "DemoVo.h"
-#import "ICCardItem.h"
 #import "CardItemRegister.h"
+
+#import "ICCardItem.h"
+#import "ICCardItemTry.h"
 
 @implementation NoteCardDatasource
 
@@ -52,7 +54,7 @@
     if (rg.cardInstance) {
         return rg.cardInstance;
     }
-    UIView<CardViewProtocol>* cdContainer = [[[ICCardItem alloc] initWithItem:rg scheduler:nvcontroller index:idx] autorelease];
+    UIView<CardViewProtocol>* cdContainer = [[[ICCardItemTry alloc] initWithItem:rg scheduler:nvcontroller index:idx] autorelease];
     cdContainer.cardItem = rg;
     return cdContainer;
 }

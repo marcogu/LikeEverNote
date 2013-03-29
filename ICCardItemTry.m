@@ -1,23 +1,16 @@
 //
-//  ICCardItem.m
+//  ICCardItemTry.m
 //  superTabNavigator
 //
-//  Created by marco on 13-2-4.
+//  Created by marco on 13-3-29.
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "ICCardItem.h"
+#import "ICCardItemTry.h"
 #import "CardItemRegister.h"
 
-@interface ICCardItem ()
-{
-    UIPanGestureRecognizer* panGesture;
-    UILongPressGestureRecognizer* pressGesture;
-}
-@end
-
-@implementation ICCardItem
+@implementation ICCardItemTry
 
 -(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx
 {
@@ -56,7 +49,7 @@
         _snapshotImg = [[UIImageView alloc] initWithImage:snapshot];
         _snapshotImg.layer.cornerRadius = 5;
         // 如果不使用这句,动画性能能达到最好
-//        _snapshotImg.clipsToBounds = YES;
+        //        _snapshotImg.clipsToBounds = YES;
         [self addSubview: _snapshotImg];
         [_snapshotImg release];
     }
@@ -182,7 +175,7 @@
     [self updateScalingFactor];
     if (animated)
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self expandCardToFullSize:NO];} completion:^(BOOL finished) {
-//            NSLog(@"full screen complete");
+            //            NSLog(@"full screen complete");
         }];
     else
         [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
@@ -193,7 +186,7 @@
     [self updateScalingFactor];
     if (animated)
         [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self shrinkCardToScaledSize:NO];} completion:^(BOOL finished) {
-//            NSLog(@"scale size complete");
+            //            NSLog(@"scale size complete");
         }];
     else
         [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];

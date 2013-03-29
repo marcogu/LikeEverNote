@@ -1,20 +1,22 @@
 //
-//  ICCardItem.h
+//  ICCardItemTry.h
 //  superTabNavigator
 //
-//  Created by marco on 13-2-4.
+//  Created by marco on 13-3-29.
 //  Copyright (c) 2013年 marco. All rights reserved.
 //
 
 #import "ICNoteControllerProtocol.h"
-#import "NoteController.h"
 
-@interface ICCardItem : UIView<CardViewProtocol>
+@interface ICCardItemTry : UIView<CardViewProtocol>
 {
     CGFloat originY;
     CGFloat scalingFactor;
     NSInteger index;
     UIImage* snapshot;
+    
+    UIPanGestureRecognizer* panGesture;
+    UILongPressGestureRecognizer* pressGesture;
 }
 // the member controller preview image
 @property (nonatomic, retain) UIImageView* snapshotImg;

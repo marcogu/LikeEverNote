@@ -23,9 +23,9 @@
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"premium-header-mid-skinny.png" title:@"Go Premium"]];
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Places"]];
     [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Tags"]];
-//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Notebooks"]];
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"Notebooks"]];
     [cardController registViewCtrl:[ModalGroupController class] viewPolicy:OnBackGroundRelasePolicy];
-//    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"temp"]];
+    [cardController registViewCtrl:[CustomerController class] viewPolicy:OnBackGroundRelasePolicy paramObj:[DemoVo create:@"bar-mid.png" title:@"temp"]];
 
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
     return YES;

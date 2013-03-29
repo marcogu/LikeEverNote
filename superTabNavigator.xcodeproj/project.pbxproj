@@ -33,6 +33,7 @@
 		A91B151716B7A0A90030007D /* DemoVo.m in Sources */ = {isa = PBXBuildFile; fileRef = A91B151616B7A0A90030007D /* DemoVo.m */; };
 		A92DA33A16E4760400F35DEE /* NoteController.m in Sources */ = {isa = PBXBuildFile; fileRef = A92DA33916E4760400F35DEE /* NoteController.m */; };
 		A92F60CD16BF9FC5002B1E9A /* ICCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */; };
+		A938FD061705612F00EF49E8 /* ICCardItemTry.m in Sources */ = {isa = PBXBuildFile; fileRef = A938FD051705612F00EF49E8 /* ICCardItemTry.m */; };
 		A9472B4916BA1B6C00E9DC5C /* CustomerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9472B4816BA1B6B00E9DC5C /* CustomerController.m */; };
 		A97E777E16E09147000A4B89 /* CardItemRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = A97E777D16E09147000A4B89 /* CardItemRegister.m */; };
 		A9A8CA5416A3FA8D0027364A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A8CA5316A3FA8D0027364A /* UIKit.framework */; };
@@ -266,6 +267,8 @@
 		A92DA33916E4760400F35DEE /* NoteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteController.m; sourceTree = "<group>"; };
 		A92F60CB16BF9FC5002B1E9A /* ICCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardItem.h; sourceTree = "<group>"; };
 		A92F60CC16BF9FC5002B1E9A /* ICCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardItem.m; sourceTree = "<group>"; };
+		A938FD041705612F00EF49E8 /* ICCardItemTry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardItemTry.h; sourceTree = "<group>"; };
+		A938FD051705612F00EF49E8 /* ICCardItemTry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardItemTry.m; sourceTree = "<group>"; };
 		A9472B4716BA1B6B00E9DC5C /* CustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomerController.h; path = ../CustomerController.h; sourceTree = "<group>"; };
 		A9472B4816BA1B6B00E9DC5C /* CustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomerController.m; path = ../CustomerController.m; sourceTree = "<group>"; };
 		A97E777C16E09147000A4B89 /* CardItemRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardItemRegister.h; sourceTree = "<group>"; };
@@ -570,6 +573,8 @@
 				A97E777D16E09147000A4B89 /* CardItemRegister.m */,
 				A92DA33816E4760400F35DEE /* NoteController.h */,
 				A92DA33916E4760400F35DEE /* NoteController.m */,
+				A938FD041705612F00EF49E8 /* ICCardItemTry.h */,
+				A938FD051705612F00EF49E8 /* ICCardItemTry.m */,
 			);
 			name = class;
 			sourceTree = "<group>";
@@ -870,6 +875,7 @@
 				A917C3BB16FC4D89004C4315 /* UIView+YIFullScreenScroll.m in Sources */,
 				A917C3C116FC4DE4004C4315 /* BaseValueObject.m in Sources */,
 				A917C3C216FC4DE4004C4315 /* ReciverVo.m in Sources */,
+				A938FD061705612F00EF49E8 /* ICCardItemTry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
