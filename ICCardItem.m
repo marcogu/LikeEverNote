@@ -19,14 +19,13 @@
 
 @implementation ICCardItem
 
--(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx
-{
+-(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx {
     self.cardItem = item;
     UIImage* previewImg = [item.getViewCtrl previewImageInCording];
     CGRect frame = {{0,0},previewImg.size};
     self = [super initWithFrame:frame];
-    if (self)
-    {   //init local variable
+    if (self) {
+        //init local variable
         index = idx;
         snapshot = previewImg;
         self.scheduleController = nvcontroller;
@@ -45,8 +44,9 @@
         [_snapshotImg addGestureRecognizer:panGesture];
         [_snapshotImg addGestureRecognizer:pressGesture];
         
-        [self setState:ICControllerCardStateDefault
-              animated:NO];
+        [self updateScalingFactor];
+        self.state = ICControllerCardStateDefault;
+        [self setState:ICControllerCardStateDefault animated:NO];
     }
     return self;
 }
@@ -56,7 +56,7 @@
         _snapshotImg = [[UIImageView alloc] initWithImage:snapshot];
         _snapshotImg.layer.cornerRadius = 5;
         // 如果不使用这句,动画性能能达到最好
-//        _snapshotImg.clipsToBounds = YES;
+        _snapshotImg.clipsToBounds = YES;
         [self addSubview: _snapshotImg];
         [_snapshotImg release];
     }
@@ -73,10 +73,8 @@
     [super dealloc];
 }
 
--(void) redrawShadow
-{
-    if (kDefaultShadowEnabled)
-    {
+-(void) redrawShadow {
+    if (kDefaultShadowEnabled) {
         UIBezierPath *path  =  [UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:kDefaultCornerRadius];
         
         [self.layer setShadowOpacity: kDefaultShadowOpacity];
@@ -87,69 +85,43 @@
     }
 }
 
--(void) setState:(ICControllerCardState)state animated:(BOOL) animated
-{
-    if (animated)
-    {
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{
-            [self setState:state animated:NO];
-        } completion:^(BOOL finished) {
-            if (finished)
-                [self pushToMemberControllerIfSelfIsCurrent];
-        }];
-        return;
-    }
-    
-    switch (state)
-    {
+-(void) setState:(ICControllerCardState)state animated:(BOOL) animated {
+    switch (state) {
         case ICControllerCardStateFullScreen:
-            [self expandCardToFullSize: animated];
+            [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
             [self setYCoordinate: 0];
             break;
-            
         case ICControllerCardStateDefault:
-            [self shrinkCardToScaledSize: animated];
+            [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
             [self setYCoordinate: originY];
             break;
-            //Hidden State - Bottom : Move it off screen and far enough down that the shadow does not appear on screen
         case ICControllerCardStateHiddenBottom:
             [self setYCoordinate:snapshot.size.height+ abs(kDefaultShadowOffset.height)*3];
             break;
-            //Hidden State - Top
         case ICControllerCardStateHiddenTop:
             [self setYCoordinate: 0];
             break;
         default:
             break;
     }
-    //start new animation.
-    ICControllerCardState lastState = self.state;
-    [self setState:state];
-    //Notify the delegate
-    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
-        [self.cardCtrlDelegate controllerCard:self didChangeToState:state fromState: lastState];
 }
 
--(void) setFrame:(CGRect)frame
-{
+-(void) setFrame:(CGRect)frame{
     [super setFrame: frame];
     [self redrawShadow];
 }
 
--(BOOL)isNeedToInvokeDelegate:(CGFloat)translationY
-{
+-(BOOL)isNeedToInvokeDelegate:(CGFloat)translationY{
     BOOL rs = translationY > 0 && ((self.state == ICControllerCardStateFullScreen && self.frame.origin.y < originY) ||
                                    (self.state == ICControllerCardStateDefault && self.frame.origin.y > originY));
-    if (rs)
-    {
+    if (rs) {
         if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didUpdatePanPercentage:)] )
             [self.cardCtrlDelegate controllerCard:self didUpdatePanPercentage: [self percentageDistanceTravelled]];
     }
     return rs;
 }
 
--(BOOL) shouldReturnToState:(ICControllerCardState) state fromPoint:(CGPoint) point
-{
+-(BOOL) shouldReturnToState:(ICControllerCardState) state fromPoint:(CGPoint) point{
     if (state == ICControllerCardStateFullScreen)
         return ABS(point.y) < 50;
     else if (state == ICControllerCardStateDefault)
@@ -157,103 +129,85 @@
     return NO;
 }
 
--(CGFloat) percentageDistanceTravelled
-{
+-(CGFloat) percentageDistanceTravelled{
     return self.frame.origin.y/originY;
 }
 
 #pragma mark - layout method
 
--(void) setYCoordinate:(CGFloat)yValue
-{
+-(void) setYCoordinate:(CGFloat)yValue{
     CGRect rect = CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height);
     [self setFrame:rect];
 }
 
--(void) updateScalingFactor
-{
+-(void) updateScalingFactor{
     if (!scalingFactor)
         scalingFactor =  [self.scheduleController scalingFactorForIndex: index];
 }
 
--(void) expandCardToFullSize:(BOOL) animated
-{
-    [self updateScalingFactor];
-    if (animated)
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self expandCardToFullSize:NO];} completion:^(BOOL finished) {
-//            NSLog(@"full screen complete");
-        }];
-    else
-        [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
-}
-
--(void) shrinkCardToScaledSize:(BOOL) animated
-{
-    [self updateScalingFactor];
-    if (animated)
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self shrinkCardToScaledSize:NO];} completion:^(BOOL finished) {
-//            NSLog(@"scale size complete");
-        }];
-    else
-        [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
-}
-
 #pragma mark - action handler
 
--(void) didPerformLongPress:(UILongPressGestureRecognizer*) recognizer
-{
-    if (self.state == ICControllerCardStateDefault && recognizer.state == UIGestureRecognizerStateEnded)
-        [self setState:ICControllerCardStateFullScreen animated:YES];
+-(void) didPerformLongPress:(UILongPressGestureRecognizer*) recognizer{
+    if (self.state == ICControllerCardStateDefault && recognizer.state == UIGestureRecognizerStateEnded){
+        [self playAnimationToState:ICControllerCardStateFullScreen];
+    }
 }
 
--(void) didPerformPanGesture:(UIPanGestureRecognizer*) recognizer
-{
+-(void)playAnimationToState:(ICControllerCardState) state{
+    [UIView beginAnimations:[NSString stringWithFormat:@"iccarditem%d",index] context:NULL];
+    [UIView setAnimationDuration:kDefaultAnimationDuration];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
+    ICControllerCardState lastState = self.state;
+    self.state = state;
+    [self setState:state animated:YES];
+    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)]){
+        [self.cardCtrlDelegate controllerCard:self didChangeToState:_state fromState:lastState];
+    }
+    [UIView commitAnimations];
+}
+
+-(void)animationFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context{
+    if (finished)
+        [self pushToMemberControllerIfSelfIsCurrent];
+}
+
+-(void) didPerformPanGesture:(UIPanGestureRecognizer*)recognizer {
     CGPoint location = [recognizer locationInView: _scheduleController.view];
     CGPoint translation = [recognizer translationInView: self];
-    switch (recognizer.state)
-    {
+    switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
             if (self.state == ICControllerCardStateFullScreen){
                 snapshot = self.cardItem.getViewCtrl.previewImageInCording;
                 [self.snapshotImg setImage:snapshot];
                 [self.scheduleController.navigationController popViewControllerAnimated:NO];
-                [self shrinkCardToScaledSize:YES];
+                [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
                 [_snapshotImg addGestureRecognizer:panGesture];
             }
             self.panOriginOffset = [recognizer locationInView: self].y;
             break;
-            
         case UIGestureRecognizerStateChanged:
             [self isNeedToInvokeDelegate:translation.y];
-            if (self.state == ICControllerCardStateFullScreen) {
-                [self setYCoordinate: location.y - self.panOriginOffset + 20];
-            }else{
-                [self setYCoordinate: location.y - self.panOriginOffset];
-            }
+            float deltaFix = location.y - self.panOriginOffset + (_state == ICControllerCardStateFullScreen ? 20 : 0);
+            [self setYCoordinate: deltaFix];
             break;
-            //Check if it should return to the origin location
-        case UIGestureRecognizerStateEnded:
-            [self shouldReturnToState: self.state fromPoint: [recognizer translationInView:self]] ?
-            [self setState: self.state animated:YES]
-            :
-            [self setState: self.state == ICControllerCardStateFullScreen? ICControllerCardStateDefault : ICControllerCardStateFullScreen
-                  animated:YES];
-            break;
-            
+        case UIGestureRecognizerStateEnded:{
+            ICControllerCardState willState = [self shouldReturnToState:_state fromPoint:[recognizer translationInView:self]] ? _state :
+                                _state == ICControllerCardStateFullScreen ? ICControllerCardStateDefault : ICControllerCardStateFullScreen;
+            [self playAnimationToState:willState];
+        }break;
         default:
             break;
     }
 }
 
 -(void)pushToMemberControllerIfSelfIsCurrent{
-    if (self.state == ICControllerCardStateFullScreen)
-    {
+    if (self.state == ICControllerCardStateFullScreen){
         UIViewController<NoteControllerProtocal>* mc = self.cardItem.getViewCtrl;
         [mc.gestureRecognizerTarget addGestureRecognizer:panGesture];
         [self.scheduleController.navigationController pushViewController:_cardItem.getViewCtrl animated:NO];
     }
-    else if(self.state == ICControllerCardStateDefault)
-    {
+    else if(self.state == ICControllerCardStateDefault){
         [self.cardItem validateOnBackground];
     }
 }

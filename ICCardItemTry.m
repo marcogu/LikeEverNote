@@ -23,7 +23,7 @@
     if (self)
     {   //init local variable
         index = idx;
-        snapshot = previewImg;
+        imgSize = previewImg.size;
         self.scheduleController = nvcontroller;
         item.cardInstance = self;
         self.cardCtrlDelegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController; //will delete
@@ -38,108 +38,35 @@
         [self addGestureRecognizer:pressGesture];
         self.backgroundColor = [UIColor clearColor];
         self.style = [self snapshotImgStyle:previewImg];
-        
-        [self setState:ICControllerCardStateDefault
-              animated:NO];
+
+        [self updateScalingFactor];
+        [self setState:ICControllerCardStateDefault animated:NO];
     }
     return self;
 }
 
-//-(TTImageView*)snapshotImg{
-//    if (!_snapshotImg) {
-//        _snapshotImg = [[TTImageView alloc] initWithFrame:CGRectMake(0, 0, snapshot.size.width, snapshot.size.height)];
-//        _snapshotImg.style = [self snapshotImgStyle];
-////        _snapshotImg.backgroundColor = [UIColor clearColor];
-//        [self addSubview: _snapshotImg];
-//        [_snapshotImg release];
-//    }
-//    return _snapshotImg;
-//}
-
--(TTStyle*)snapshotImgStyle:(UIImage*)img{
-    TTStyle* result =
-    [TTShapeStyle styleWithShape:
-    [TTRoundedRectangleShape shapeWithTopLeft:5 topRight:5 bottomRight:0 bottomLeft:0] next:
-    [TTImageStyle styleWithImage:img next:nil
-//    [TTShadowStyle styleWithColor:RGBACOLOR(0,0,0,0.5) blur:4 offset:CGSizeMake(2, 2) next:
-//     nil]
-     ]];
-    return result;
-}
-
 -(void) dealloc{
-//    [snapshot release];
+    //    [snapshot release];
     [_scheduleController release];
-    [_delegate release];
+    [_cardCtrlDelegate release];
     [pressGesture release];
     [panGesture release];
     [_cardItem release];
     [super dealloc];
 }
 
-//-(void) redrawShadow
-//{
-//    if (kDefaultShadowEnabled)
-//    {
-//        UIBezierPath *path  =  [UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:kDefaultCornerRadius];
-//        
-//        [self.layer setShadowOpacity: kDefaultShadowOpacity];
-//        [self.layer setShadowOffset: kDefaultShadowOffset];
-//        [self.layer setShadowRadius: kDefaultShadowRadius];
-//        [self.layer setShadowColor: [kDefaultShadowColor CGColor]];
-//        [self.layer setShadowPath: [path CGPath]];
-//    }
-//}
-
--(void) setState:(ICControllerCardState)state animated:(BOOL) animated
-{
-    if (animated)
-    {
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{
-            [self setState:state animated:NO];
-        } completion:^(BOOL finished) {
-            if (finished)
-                [self pushToMemberControllerIfSelfIsCurrent];
-        }];
-        return;
-    }
+-(TTStyle*)snapshotImgStyle:(UIImage*)img{
+    TTStyle* result =
+    [TTShapeStyle styleWithShape:
+    [TTRoundedRectangleShape shapeWithTopLeft:5 topRight:5 bottomRight:0 bottomLeft:0] next:
+    [TTShadowStyle styleWithColor:RGBACOLOR(0,0,0,0.5) blur:4 offset:CGSizeMake(0, -5) next:
+     [TTInsetStyle styleWithInset:UIEdgeInsetsMake(6, 6, 6, 6) next:
+    [TTImageStyle styleWithImage:img next:
     
-    switch (state)
-    {
-        case ICControllerCardStateFullScreen:
-            [self expandCardToFullSize: animated];
-            [self setYCoordinate: 0];
-            break;
-            
-        case ICControllerCardStateDefault:
-            [self shrinkCardToScaledSize: animated];
-            [self setYCoordinate: originY];
-            break;
-            //Hidden State - Bottom : Move it off screen and far enough down that the shadow does not appear on screen
-        case ICControllerCardStateHiddenBottom:
-            [self setYCoordinate:snapshot.size.height+ abs(kDefaultShadowOffset.height)*3];
-            break;
-            //Hidden State - Top
-        case ICControllerCardStateHiddenTop:
-            [self setYCoordinate: 0];
-            break;
-        default:
-            break;
-    }
-    //start new animation.
-    ICControllerCardState lastState = self.state;
-    [self setState:state];
-    //Notify the delegate
-    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)])
-        [self.cardCtrlDelegate controllerCard:self didChangeToState:state fromState: lastState];
+     nil]
+     ]]];
+    return result;
 }
-
-//-(void) setFrame:(CGRect)frame
-//{
-//    [super setFrame: frame];
-//    [self redrawShadow];
-//}
-
 
 -(BOOL)isNeedToInvokeDelegate:(CGFloat)translationY
 {
@@ -169,46 +96,18 @@
 
 #pragma mark - layout method
 
--(void) setYCoordinate:(CGFloat)yValue
-{
-    CGRect rect = CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height);
-    [self setFrame:rect];
-}
-
 -(void) updateScalingFactor
 {
     if (!scalingFactor)
         scalingFactor =  [self.scheduleController scalingFactorForIndex: index];
 }
 
--(void) expandCardToFullSize:(BOOL) animated
-{
-    [self updateScalingFactor];
-    if (animated)
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self expandCardToFullSize:NO];} completion:^(BOOL finished) {
-            //            NSLog(@"full screen complete");
-        }];
-    else
-        [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
-}
-
--(void) shrinkCardToScaledSize:(BOOL) animated
-{
-    [self updateScalingFactor];
-    if (animated)
-        [UIView animateWithDuration:kDefaultAnimationDuration animations:^{[self shrinkCardToScaledSize:NO];} completion:^(BOOL finished) {
-            //            NSLog(@"scale size complete");
-        }];
-    else
-        [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
-}
-
 #pragma mark - action handler
 
--(void) didPerformLongPress:(UILongPressGestureRecognizer*) recognizer
-{
-    if (self.state == ICControllerCardStateDefault && recognizer.state == UIGestureRecognizerStateEnded)
-        [self setState:ICControllerCardStateFullScreen animated:YES];
+-(void) didPerformLongPress:(UILongPressGestureRecognizer*) recognizer{
+    if (self.state == ICControllerCardStateDefault && recognizer.state == UIGestureRecognizerStateEnded){
+        [self playAnimationToState:ICControllerCardStateFullScreen];
+    }
 }
 
 -(void) didPerformPanGesture:(UIPanGestureRecognizer*) recognizer
@@ -219,10 +118,9 @@
     {
         case UIGestureRecognizerStateBegan:
             if (self.state == ICControllerCardStateFullScreen){
-                snapshot = self.cardItem.getViewCtrl.previewImageInCording;
+//                snapshot = self.cardItem.getViewCtrl.previewImageInCording;
 //                [self.snapshotImg setImage:snapshot];
                 [self.scheduleController.navigationController popViewControllerAnimated:NO];
-                [self shrinkCardToScaledSize:YES];
                 [self addGestureRecognizer:panGesture];
             }
             self.panOriginOffset = [recognizer locationInView: self].y;
@@ -237,17 +135,42 @@
             }
             break;
             //Check if it should return to the origin location
-        case UIGestureRecognizerStateEnded:
-            [self shouldReturnToState: self.state fromPoint: [recognizer translationInView:self]] ?
-            [self setState: self.state animated:YES]
-            :
-            [self setState: self.state == ICControllerCardStateFullScreen? ICControllerCardStateDefault : ICControllerCardStateFullScreen
-                  animated:YES];
-            break;
-            
+        case UIGestureRecognizerStateEnded: {
+            ICControllerCardState willState = [self shouldReturnToState:_state fromPoint:[recognizer translationInView:self]] ? _state :
+            _state == ICControllerCardStateFullScreen ? ICControllerCardStateDefault : ICControllerCardStateFullScreen;
+            [self playAnimationToState:willState];
+        }
+        break;
         default:
             break;
     }
+}
+
+-(void)playAnimationToState:(ICControllerCardState) state{
+    [UIView beginAnimations:[NSString stringWithFormat:@"iccarditem%d",index] context:NULL];
+    [UIView setAnimationDuration:kDefaultAnimationDuration];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
+    ICControllerCardState lastState = self.state;
+    self.state = state;
+    [self setState:state animated:YES];
+    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)]){
+        [self.cardCtrlDelegate controllerCard:self didChangeToState:_state fromState:lastState];
+    }
+    [UIView commitAnimations];
+}
+
+-(void)animationFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context{
+    if (finished)
+        [self pushToMemberControllerIfSelfIsCurrent];
+}
+
+-(NSInteger)getCardIndex{
+    return index;
+}
+
+-(CGPoint) origin {
+    return CGPointMake(0, originY);
 }
 
 -(void)pushToMemberControllerIfSelfIsCurrent{
@@ -263,11 +186,30 @@
     }
 }
 
--(NSInteger)getCardIndex{
-    return index;
+-(void) setYCoordinate:(CGFloat)yValue
+{
+    CGRect rect = CGRectMake(self.frame.origin.x, yValue, self.frame.size.width, self.frame.size.height);
+    [self setFrame:rect];
 }
 
--(CGPoint) origin {
-    return CGPointMake(0, originY);
+-(void) setState:(ICControllerCardState)state animated:(BOOL) animated {
+    switch (state) {
+        case ICControllerCardStateFullScreen:
+            [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
+            [self setYCoordinate: 0];
+            break;
+        case ICControllerCardStateDefault:
+            [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
+            [self setYCoordinate: originY];
+            break;
+        case ICControllerCardStateHiddenBottom:
+            [self setYCoordinate:imgSize.height+ abs(kDefaultShadowOffset.height)*3];
+            break;
+        case ICControllerCardStateHiddenTop:
+            [self setYCoordinate: 0];
+            break;
+        default:
+            break;
+    }
 }
 @end

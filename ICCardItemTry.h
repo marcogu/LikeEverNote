@@ -10,12 +10,12 @@
 #import <Three20/Three20.h>
 
 
-@interface ICCardItemTry : TTImageView<CardViewProtocol>
+@interface ICCardItemTry : TTView<CardViewProtocol>
 {
     CGFloat originY;
     CGFloat scalingFactor;
     NSInteger index;
-    UIImage* snapshot;
+    CGSize imgSize;
     
     UIPanGestureRecognizer* panGesture;
     UILongPressGestureRecognizer* pressGesture;
