@@ -156,14 +156,14 @@
 -(void)playAnimationToState:(ICControllerCardState) state{
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:kDefaultAnimationDuration];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
+//    [UIView setAnimationDelegate:self];
+//    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
     ICControllerCardState lastState = self.state;
     self.state = state;
     [self setState:state animated:YES];
-    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)]){
-        [self.cardCtrlDelegate controllerCard:self didChangeToState:_state fromState:lastState];
-    }
+//    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)]){
+//        [self.cardCtrlDelegate controllerCard:self didChangeToState:_state fromState:lastState];
+//    }
     [UIView commitAnimations];
 }
 
@@ -202,10 +202,12 @@
 -(void) setState:(ICControllerCardState)state animated:(BOOL) animated {
     switch (state) {
         case ICControllerCardStateFullScreen:
-            self.frame = CGRectMake(self.frame.origin.x, 0, smlFrame.size.width, smlFrame.size.height);
+//            self.frame = CGRectMake(self.frame.origin.x, 0, smlFrame.size.width, smlFrame.size.height); // just change position
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, imgSize.width, imgSize.height);//just change size
             break;
         case ICControllerCardStateDefault:
-            self.frame = smlFrame;
+//            self.frame = smlFrame;
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, smlFrame.size.width, smlFrame.size.height);//just change size
             break;
         case ICControllerCardStateHiddenBottom:
             [self setYCoordinate:imgSize.height+ abs(kDefaultShadowOffset.height)*3];
