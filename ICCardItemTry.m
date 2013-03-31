@@ -47,7 +47,8 @@
         [self addGestureRecognizer:panGesture];
         [self addGestureRecognizer:pressGesture];
 //        [self updateScalingFactor];
-        [self setState:ICControllerCardStateDefault animated:NO];
+        self.state = ICControllerCardStateDefault;
+//        [self setState:ICControllerCardStateDefault animated:NO];
     }
     return self;
 }
@@ -153,24 +154,67 @@
     }
 }
 
+/*
 -(void)playAnimationToState:(ICControllerCardState) state{
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:kDefaultAnimationDuration];
-//    [UIView setAnimationDelegate:self];
-//    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
     ICControllerCardState lastState = self.state;
     self.state = state;
     [self setState:state animated:YES];
-//    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)]){
-//        [self.cardCtrlDelegate controllerCard:self didChangeToState:_state fromState:lastState];
-//    }
+    if ([self.cardCtrlDelegate respondsToSelector:@selector(controllerCard:didChangeToState:fromState:)]){
+        [self.cardCtrlDelegate controllerCard:self didChangeToState:_state fromState:lastState];
+    }
     [UIView commitAnimations];
 }
+ */
 
--(void)animationFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context{
-    if (finished)
-        [self pushToMemberControllerIfSelfIsCurrent];
+-(void)playAnimationToState:(ICControllerCardState) state{
+    CAAnimationGroup *theGroup = [CAAnimationGroup animation];
+//    theGroup.delegate = self;
+    theGroup.duration = kDefaultAnimationDuration;
+    theGroup.removedOnCompletion = YES;
+//    theGroup.animations = [self getCAAnimationsByState:state];
+    float deltay = 0;
+    self.state = state;
+    CABasicAnimation* ba = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
+    switch (state) {
+        case ICControllerCardStateFullScreen:{
+            ba.fromValue = [NSNumber numberWithFloat:self.frame.origin.y];
+            deltay = 0;
+            ba.toValue = [NSNumber numberWithFloat:deltay];
+        }break;
+        case ICControllerCardStateDefault:{
+            ba.fromValue = [NSNumber numberWithFloat:self.frame.origin.y];
+            deltay = smlFrame.origin.y;
+            ba.toValue = [NSNumber numberWithFloat:deltay];
+        }break;
+        case ICControllerCardStateHiddenBottom:
+            break;
+        case ICControllerCardStateHiddenTop:
+            break;
+        default:
+            break;
+    }
+    
+    CABasicAnimation *transformAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
+	transformAnimation.removedOnCompletion = YES;
+	transformAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.15, 1.15, 1.0)];
+    
+    theGroup.animations = [NSArray arrayWithObjects:ba, transformAnimation, nil];
+    [self.layer addAnimation:theGroup forKey:@"stateChange"];
+    
+    CGRect rect = {self.frame.origin.x, deltay, self.frame.size};
+    self.frame = rect;
+    
 }
+
+
+//-(void)animationFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context{
+//    if (finished)
+//        [self pushToMemberControllerIfSelfIsCurrent];
+//}
 
 -(NSInteger)getCardIndex{
     return index;
