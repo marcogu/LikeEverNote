@@ -202,7 +202,7 @@
 -(void) setState:(ICControllerCardState)state animated:(BOOL) animated {
     switch (state) {
         case ICControllerCardStateFullScreen:
-            self.frame = CGRectMake(0, 0, imgSize.width, imgSize.height);
+            self.frame = CGRectMake(self.frame.origin.x, 0, smlFrame.size.width, smlFrame.size.height);
             break;
         case ICControllerCardStateDefault:
             self.frame = smlFrame;
