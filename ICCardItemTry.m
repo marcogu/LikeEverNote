@@ -8,38 +8,45 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-
 #import "ICCardItemTry.h"
 #import "CardItemRegister.h"
 
+
+@interface ICCardItemTry(){
+    CGRect smlFrame;
+}
+@end
+
+
 @implementation ICCardItemTry
 
--(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx
-{
+-(id)initWithItem:(CardItemRegister*)item scheduler:(UIViewController<PreviewableControllerProtocol>*)nvcontroller index:(NSInteger)idx{
     self.cardItem = item;
+    // init frame
     UIImage* previewImg = [item.getViewCtrl previewImageInCording];
-    CGRect frame = {{0,0},previewImg.size};
-    self = [super initWithFrame:frame];
+    imgSize = previewImg.size;
+    originY = [nvcontroller defaultVerticalOriginForIndex:idx];
+    float smlSizW = imgSize.width*0.95;
+    smlFrame = CGRectMake((imgSize.width - smlSizW)/2, originY, smlSizW, imgSize.height*0.95);
+    self = [super initWithFrame:smlFrame];
+    
     if (self)
     {   //init local variable
         index = idx;
-        imgSize = previewImg.size;
         self.scheduleController = nvcontroller;
         item.cardInstance = self;
         self.cardCtrlDelegate = (NSObject<ICNoteViewControllerDelegate>*)self.scheduleController; //will delete
         // init self layout
-        originY = [nvcontroller defaultVerticalOriginForIndex:index];
-        [self setAutoresizesSubviews:YES];
-        [self setAutoresizingMask: UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+//        [self setAutoresizesSubviews:YES];
+//        [self setAutoresizingMask: UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+        self.backgroundColor = [UIColor clearColor];
+        self.style = [self snapshotImgStyle:previewImg];
         // add gensture for content view.
         panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformPanGesture:)];
         pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformLongPress:)];
         [self addGestureRecognizer:panGesture];
         [self addGestureRecognizer:pressGesture];
-        self.backgroundColor = [UIColor clearColor];
-        self.style = [self snapshotImgStyle:previewImg];
-
-        [self updateScalingFactor];
+//        [self updateScalingFactor];
         [self setState:ICControllerCardStateDefault animated:NO];
     }
     return self;
@@ -60,11 +67,11 @@
     [TTShapeStyle styleWithShape:
     [TTRoundedRectangleShape shapeWithTopLeft:5 topRight:5 bottomRight:0 bottomLeft:0] next:
     [TTShadowStyle styleWithColor:RGBACOLOR(0,0,0,0.5) blur:4 offset:CGSizeMake(0, -5) next:
-     [TTInsetStyle styleWithInset:UIEdgeInsetsMake(6, 6, 6, 6) next:
+//     [TTInsetStyle styleWithInset:UIEdgeInsetsMake(6, 6, 6, 6) next:
     [TTImageStyle styleWithImage:img next:
     
      nil]
-     ]]];
+     ]]; //]]
     return result;
 }
 
@@ -147,7 +154,7 @@
 }
 
 -(void)playAnimationToState:(ICControllerCardState) state{
-    [UIView beginAnimations:[NSString stringWithFormat:@"iccarditem%d",index] context:NULL];
+    [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:kDefaultAnimationDuration];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
@@ -195,12 +202,10 @@
 -(void) setState:(ICControllerCardState)state animated:(BOOL) animated {
     switch (state) {
         case ICControllerCardStateFullScreen:
-            [self setTransform: CGAffineTransformMakeScale(kDefaultMaximizedScalingFactor, kDefaultMaximizedScalingFactor)];
-            [self setYCoordinate: 0];
+            self.frame = CGRectMake(0, 0, imgSize.width, imgSize.height);
             break;
         case ICControllerCardStateDefault:
-            [self setTransform: CGAffineTransformMakeScale(scalingFactor, scalingFactor)];
-            [self setYCoordinate: originY];
+            self.frame = smlFrame;
             break;
         case ICControllerCardStateHiddenBottom:
             [self setYCoordinate:imgSize.height+ abs(kDefaultShadowOffset.height)*3];
